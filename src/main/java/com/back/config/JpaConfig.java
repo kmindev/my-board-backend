@@ -11,6 +11,7 @@ public class JpaConfig {
 
     @Bean
     public AuditorAware<String> auditorAware() {
+        // TODO: 인증 구현 후 세부 로직 작성
         return () -> Optional.of("kkm");
     }
 

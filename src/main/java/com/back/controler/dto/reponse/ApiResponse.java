@@ -1,4 +1,4 @@
-package com.back.dto.reponse;
+package com.back.controler.dto.reponse;
 
 import com.back.exception.ErrorCode;
 import org.springframework.http.HttpStatus;

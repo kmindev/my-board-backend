@@ -1,6 +1,6 @@
 package com.back.controler.advice;
 
-import com.back.dto.reponse.ApiResponse;
+import com.back.controler.dto.reponse.ApiResponse;
 import com.back.exception.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;

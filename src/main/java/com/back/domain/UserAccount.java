@@ -29,4 +29,17 @@ public class UserAccount extends BaseEntity {
     @Convert(converter = UserRoleTypeConverter.class)
     private UserRoleType role; // 권한
 
+    private UserAccount(String userId, String userPassword, String email, String nickname, String memo, UserRoleType role) {
+        this.userId = userId;
+        this.userPassword = userPassword;
+        this.email = email;
+        this.nickname = nickname;
+        this.memo = memo;
+        this.role = role;
+    }
+
+    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, UserRoleType role) {
+        return new UserAccount(userId, userPassword, email, nickname, memo, role);
+    }
+
 }

@@ -6,12 +6,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionRestAdvice {
+
+    @ExceptionHandler
+    public ResponseEntity<ApiResponse<Void>> handleValidationExceptions(MethodArgumentNotValidException e) {
+        log.error(e.getMessage(), e);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.errorWithMessage(HttpStatus.BAD_REQUEST, e.getBindingResult().getFieldError().getDefaultMessage()));
+    }
 
     @ExceptionHandler
     public ResponseEntity<ApiResponse<Void>> applicationException(ApplicationException e) {

@@ -17,6 +17,10 @@ public record ApiResponse<T>(
         return new ApiResponse<>(HttpStatus.OK.value(), null, data);
     }
 
+    public static ApiResponse<Void> okWithMessage(String message) {
+        return new ApiResponse<>(HttpStatus.OK.value(), message, null);
+    }
+
     public static <T> ApiResponse<T> okWithMessageAndData(String message, T data) {
         return new ApiResponse<>(HttpStatus.OK.value(), message, data);
     }

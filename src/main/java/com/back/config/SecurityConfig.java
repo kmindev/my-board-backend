@@ -2,10 +2,7 @@ package com.back.config;
 
 import com.back.domain.UserRoleType;
 import com.back.secuirty.ApiAuthenticationFilter;
-import com.back.secuirty.handler.ApiAccessDeniedHandler;
-import com.back.secuirty.handler.ApiAuthenticationFailureHandler;
-import com.back.secuirty.handler.ApiAuthenticationSuccessHandler;
-import com.back.secuirty.handler.ApiLoginAuthenticationEntryPoint;
+import com.back.secuirty.handler.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +24,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig {
     private static final String LOGIN_URL = "/v1/auth/login";
+    private static final String LOGOUT_URL = "/v1/auth/logout";
     private static final String[] ALL_PERMITTED_URLS = {LOGIN_URL, "/h2-console/**"};
     private static final String[] ADMIN_PERMITTED_URLS = {"/v1/auth/admin-test"};
 
@@ -35,6 +33,7 @@ public class SecurityConfig {
     private final ApiAuthenticationFailureHandler failureHandler;
     private final ApiAccessDeniedHandler deniedHandler;
     private final ApiLoginAuthenticationEntryPoint entryPoint;
+    private final ApiLogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,7 +41,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .logout(AbstractHttpConfigurer::disable)
                 .headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable).disable()) // H2 콘솔 표시를 위한 헤더 비활성화
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(ALL_PERMITTED_URLS).permitAll()
@@ -52,6 +50,14 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(entryPoint) // 인증되지 않은 요청 처리
                         .accessDeniedHandler(deniedHandler) // 권한 부족 요청 처리
+                )
+                .logout(logout -> logout
+                        .logoutUrl(LOGOUT_URL)
+                        .logoutSuccessHandler(logoutSuccessHandler)
+                        .invalidateHttpSession(true) // 세션 무효화
+                        .clearAuthentication(true) // 인증 정보 삭제
+                        .deleteCookies("JSESSIONID")
+
                 );
 
         return http.build();

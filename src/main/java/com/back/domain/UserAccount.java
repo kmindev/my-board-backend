@@ -1,6 +1,8 @@
 package com.back.domain;
 
+import com.back.domain.converter.UserRoleTypeConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
@@ -22,5 +24,22 @@ public class UserAccount extends BaseEntity {
     @Column private String memo; // 메모
     @Column private String socialProvider; // 소셜 로그인 제공처
     @Column private String socialId; // 유저 소셜 고유 id
+
+    @Column(length = 10)
+    @Convert(converter = UserRoleTypeConverter.class)
+    private UserRoleType role; // 권한
+
+    private UserAccount(String userId, String userPassword, String email, String nickname, String memo, UserRoleType role) {
+        this.userId = userId;
+        this.userPassword = userPassword;
+        this.email = email;
+        this.nickname = nickname;
+        this.memo = memo;
+        this.role = role;
+    }
+
+    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, UserRoleType role) {
+        return new UserAccount(userId, userPassword, email, nickname, memo, role);
+    }
 
 }

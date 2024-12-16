@@ -1,5 +1,16 @@
+debug: false
+
+logging:
+  level:
+    com.back: debug
+    org.springframework:
+      web.servlet: debug
+      security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
 server:
   port: 8080
+  servlet.context-path: /api
 
 spring:
   datasource:

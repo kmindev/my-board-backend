@@ -20,4 +20,5 @@
 [API 문서](https://github.com/kmindev/my-board-backend/wiki/API-Document-v1.0)
 
 ## ERD
-![image](https://github.com/user-attachments/assets/406ecbe0-4d8d-4927-b97a-a2021a9f338a)
+![image](https://github.com/user-attachments/assets/7cf85361-f7dc-42ec-98b4-d6264b930c4c)
+

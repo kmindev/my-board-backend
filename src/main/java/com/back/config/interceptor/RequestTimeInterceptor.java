@@ -28,10 +28,11 @@ public class RequestTimeInterceptor implements HandlerInterceptor {
 
         String uri = request.getRequestURI();
         String method = request.getMethod();
-        log.info("[{} {}] execute time : {}ms", method, uri, executeTime);
 
         if (executeTime > LONG_TIME_MS) {
             log.warn("[{} {}] Slow Request! execute time : {}ms", method, uri, executeTime);
+        } else {
+            log.info("[{} {}] execute time : {}ms", method, uri, executeTime);
         }
     }
 

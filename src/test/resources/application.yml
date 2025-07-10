@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:my-board
+  sql.init.mode: never
+  jpa:
+    hibernate.ddl-auto: create
+    defer-datasource-initialization: false

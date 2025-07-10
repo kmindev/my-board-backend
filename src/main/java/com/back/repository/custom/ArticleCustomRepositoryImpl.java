@@ -4,22 +4,19 @@ import com.back.domain.Article;
 import com.back.domain.QArticle;
 import com.back.domain.QArticleHashtag;
 import com.back.domain.QHashtag;
-import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.Collection;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.List;
 
-@Repository
-public class ArticleCustomRepositoryImpl extends QuerydslRepositorySupport implements ArticleCustomRepository{
+@RequiredArgsConstructor
+public class ArticleCustomRepositoryImpl implements ArticleCustomRepository {
 
-    public ArticleCustomRepositoryImpl() {
-        super(Article.class);
-    }
+    private final JPAQueryFactory queryFactory;
 
     @Override
     public Page<Article> findByHashtagNames(Collection<String> hashtagNames, Pageable pageable) {
@@ -27,12 +24,25 @@ public class ArticleCustomRepositoryImpl extends QuerydslRepositorySupport imple
         QHashtag hashtag = QHashtag.hashtag;
         QArticleHashtag articleHashtag = QArticleHashtag.articleHashtag;
 
-        JPQLQuery<Article> query = from(article)
+        List<Article> articles = queryFactory
+                .select(article)
+                .from(article)
                 .innerJoin(article.articleHashtags, articleHashtag)
                 .innerJoin(articleHashtag.hashtag, hashtag)
-                .where(hashtag.hashtagName.in(hashtagNames));
-        List<Article> articles = getQuerydsl().applyPagination(pageable, query).fetch();
-        return new PageImpl<>(articles, pageable, articles.size());
+                .where(hashtag.hashtagName.in(hashtagNames))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long count = queryFactory
+                .select(article.countDistinct())
+                .from(article)
+                .innerJoin(article.articleHashtags, articleHashtag)
+                .innerJoin(articleHashtag.hashtag, hashtag)
+                .where(hashtag.hashtagName.in(hashtagNames))
+                .fetchOne();
+
+        return new PageImpl<>(articles, pageable, count == null ? 0 : count);
     }
 
 }

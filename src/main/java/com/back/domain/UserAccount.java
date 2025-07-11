@@ -6,9 +6,13 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -16,6 +20,7 @@ public class UserAccount extends BaseEntity {
 
     @Id
     @Column(nullable = false, length = 50)
+    @EqualsAndHashCode.Include
     private String userId; // 유저 id
 
     @Column(nullable = false) private String userPassword; // 패스워드

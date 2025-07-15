@@ -1,6 +1,8 @@
 package com.back.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_CLASS;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
 import com.back.config.TestJpaConfig;
 import com.back.domain.Article;
@@ -19,9 +21,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 
 @DisplayName("Repository - 게시글")
-@Sql(scripts = "/sql/data.sql")
+@Sql(scripts = "/sql/data.sql", executionPhase = BEFORE_TEST_CLASS)
 @Import(TestJpaConfig.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = BEFORE_CLASS)
 @DataJpaTest
 class ArticleRepositoryTest {
 

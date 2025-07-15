@@ -1,18 +1,28 @@
 package com.back.domain;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -20,6 +30,7 @@ public class Article extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id; // id
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -78,5 +89,19 @@ public class Article extends BaseEntity {
                 removeHashtags.contains(articleHashtag.getHashtag())
         );
     }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (o == null || getClass() != o.getClass()) {
+//            return false;
+//        }
+//        Article article = (Article) o;
+//        return Objects.equals(getId(), article.getId());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hashCode(getId());
+//    }
 
 }

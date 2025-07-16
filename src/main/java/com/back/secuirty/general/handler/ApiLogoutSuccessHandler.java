@@ -19,7 +19,7 @@ public class ApiLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("[Logout Succeed] : {}", authentication.getName());
+        log.debug("[Logout Succeed] username: {}", authentication.getName());
         ApiResponse<Void> apiResponse = ApiResponse.okWithMessage("로그아웃 성공");
         sendResponseWithBody(response, apiResponse);
     }

@@ -25,7 +25,7 @@ public class ApiAuthenticationSuccessHandler implements AuthenticationSuccessHan
             HttpServletResponse response,
             Authentication authentication
     ) throws IOException {
-        log.info("[Authentication Succeed] : {}", request.getAttribute("username"));
+        log.debug("[Authentication Succeed] username: {}", request.getAttribute("username"));
         ApiResponse<Void> apiResponse = ApiResponse.okWithMessage("로그인 성공.");
         sendResponseWithBody(response, apiResponse);
     }

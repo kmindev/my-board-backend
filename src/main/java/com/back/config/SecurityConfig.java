@@ -5,6 +5,7 @@ import static com.back.secuirty.SecurityUrlManager.H2_CONSOLE_URL;
 import static com.back.secuirty.SecurityUrlManager.LOGIN_URL;
 import static com.back.secuirty.SecurityUrlManager.LOGOUT_URL;
 import static com.back.secuirty.SecurityUrlManager.SWAGGER_URLS;
+import static org.springframework.http.HttpMethod.GET;
 
 import com.back.domain.UserRoleType;
 import com.back.secuirty.general.ApiAuthenticationFilter;
@@ -58,8 +59,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable).disable()) // H2 콘솔 표시를 위한 헤더 비활성화
+                .headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
+                        .disable()) // H2 콘솔 표시를 위한 헤더 비활성화
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers(GET, "/v1/articles/**").permitAll()
+                        .requestMatchers(GET, "/v1/comments/**").permitAll()
                         .requestMatchers(SWAGGER_URLS).permitAll()
                         .requestMatchers(H2_CONSOLE_URL).permitAll()
                         .requestMatchers(LOGIN_URL).permitAll()

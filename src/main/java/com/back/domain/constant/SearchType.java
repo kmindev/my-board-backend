@@ -15,19 +15,4 @@ public enum SearchType {
     SearchType(String typeName) {
         this.typeName = typeName;
     }
-
-    public static SearchType of(String searchTypeStr) {
-        if (searchTypeStr == null) {
-            return null;
-        }
-
-        for (SearchType searchType : SearchType.values()) {
-            if (searchTypeStr.equals(searchType.getTypeName())) {
-                return searchType;
-            }
-        }
-
-        return null;
-    }
-
 }

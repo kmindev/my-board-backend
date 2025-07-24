@@ -1,10 +1,21 @@
 package com.back.config;
 
+import static com.back.secuirty.SecurityUrlManager.ADMIN_ONLY_URLS;
+import static com.back.secuirty.SecurityUrlManager.H2_CONSOLE_URL;
+import static com.back.secuirty.SecurityUrlManager.LOGIN_URL;
+import static com.back.secuirty.SecurityUrlManager.LOGOUT_URL;
+import static com.back.secuirty.SecurityUrlManager.SWAGGER_URLS;
+import static org.springframework.http.HttpMethod.GET;
+
 import com.back.domain.UserRoleType;
-import com.back.secuirty.general.handler.*;
+import com.back.secuirty.general.ApiAuthenticationFilter;
+import com.back.secuirty.general.handler.ApiAccessDeniedHandler;
+import com.back.secuirty.general.handler.ApiAuthenticationFailureHandler;
+import com.back.secuirty.general.handler.ApiAuthenticationSuccessHandler;
+import com.back.secuirty.general.handler.ApiLoginAuthenticationEntryPoint;
+import com.back.secuirty.general.handler.ApiLogoutSuccessHandler;
 import com.back.secuirty.oauth2.handler.OAuth2AuthFailureHandler;
 import com.back.secuirty.oauth2.handler.Oauth2AuthSuccessHandler;
-import com.back.secuirty.general.ApiAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,10 +41,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
-    private static final String LOGIN_URL = "/v1/auth/login";
-    private static final String LOGOUT_URL = "/v1/auth/logout";
-    private static final String[] ALL_PERMITTED_URLS = {LOGIN_URL, "/h2-console/**"};
-    private static final String[] ADMIN_PERMITTED_URLS = {"/v1/auth/admin-test"};
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final ApiAuthenticationSuccessHandler successHandler;
@@ -52,10 +59,15 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable).disable()) // H2 콘솔 표시를 위한 헤더 비활성화
+                .headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
+                        .disable()) // H2 콘솔 표시를 위한 헤더 비활성화
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(ALL_PERMITTED_URLS).permitAll()
-                        .requestMatchers(ADMIN_PERMITTED_URLS).hasAuthority(UserRoleType.ADMIN.getName())
+                        .requestMatchers(GET, "/v1/articles/**").permitAll()
+                        .requestMatchers(GET, "/v1/comments/**").permitAll()
+                        .requestMatchers(SWAGGER_URLS).permitAll()
+                        .requestMatchers(H2_CONSOLE_URL).permitAll()
+                        .requestMatchers(LOGIN_URL).permitAll()
+                        .requestMatchers(ADMIN_ONLY_URLS).hasAuthority(UserRoleType.ADMIN.getName())
                         .anyRequest().authenticated())
                 .addFilterBefore(apiAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
@@ -68,7 +80,6 @@ public class SecurityConfig {
                         .invalidateHttpSession(true) // 세션 무효화
                         .clearAuthentication(true) // 인증 정보 삭제
                         .deleteCookies("JSESSIONID")
-
                 )
                 .oauth2Login(oAuth -> oAuth.
                         userInfoEndpoint(useInfo -> useInfo

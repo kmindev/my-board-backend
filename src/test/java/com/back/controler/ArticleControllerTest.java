@@ -2,7 +2,6 @@ package com.back.controler;
 
 import com.back.config.JsonDataEncoder;
 import com.back.config.UnsecuredWebMvcTest;
-import com.back.controler.converter.SearchTypeRequestConverter;
 import com.back.controler.dto.request.ArticleUpdateRequest;
 import com.back.controler.dto.request.NewArticleRequest;
 import com.back.domain.constant.SearchType;
@@ -54,8 +53,6 @@ class ArticleControllerTest {
     @MockitoBean
     private ArticleService articleService;
 
-    private final SearchTypeRequestConverter searchTypeRequestConverter = new SearchTypeRequestConverter();
-
     @DisplayName("게시글 생성 요청 - 성공")
     @Test
     void givenNewArticleRequest_whenNewArticle_thenReturns200() throws Exception {
@@ -99,15 +96,14 @@ class ArticleControllerTest {
     void givenSearchParams_whenGetArticles_thenReturns200() throws Exception {
         // Given
         String searchValue = "test1";
-        String searchTypeStr = "본문";
-        SearchType searchType = searchTypeRequestConverter.convert(searchTypeStr);
+        SearchType searchType = SearchType.CONTENT;
         given(articleService.searchArticles(any(Pageable.class), eq(searchValue), eq(searchType)))
                 .willReturn(Page.empty());
 
         // When & Then
         mvc.perform(get("/v1/articles")
                         .queryParam("searchValue", searchValue)
-                        .queryParam("searchType", searchType.getTypeName()))
+                        .queryParam("searchType", searchType.name()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.data").exists())
@@ -145,10 +141,6 @@ class ArticleControllerTest {
         // Given
         String searchValue = "test1";
         String searchTypeStr = "잘못된 타입";
-        SearchType searchType = searchTypeRequestConverter.convert(searchTypeStr);
-        UnexpectedSearchTypeException exception = new UnexpectedSearchTypeException();
-        given(articleService.searchArticles(any(Pageable.class), eq(searchValue), eq(searchType)))
-                .willThrow(exception);
 
         // When & Then
         mvc.perform(get("/v1/articles")
@@ -157,8 +149,7 @@ class ArticleControllerTest {
                 .andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.code").value(400))
                 .andExpect(jsonPath("$.data").isEmpty())
-                .andExpect(jsonPath("$.message").value(exception.getMessage()));
-        then(articleService).should().searchArticles(any(Pageable.class), eq(searchValue), eq(searchType));
+                .andExpect(jsonPath("$.message").isNotEmpty());
     }
 
     @DisplayName("게시글 상세 조회 - 성공")

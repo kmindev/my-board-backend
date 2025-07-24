@@ -27,7 +27,7 @@ public class Oauth2AuthSuccessHandler implements AuthenticationSuccessHandler {
     ) throws IOException {
         if (authentication.getPrincipal() instanceof BoardUserDetails userDetails) {
             String username = userDetails.getUsername();
-            log.info("[Authentication Succeed] Username: {}", username);
+            log.debug("[Authentication Succeed] Username: {}", username);
         } else {
             log.warn("[Authentication Succeed] 사용자 정보를 가져올 수 없습니다.");
         }

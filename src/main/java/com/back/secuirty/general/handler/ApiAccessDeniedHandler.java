@@ -22,7 +22,8 @@ import static com.back.util.ResponseUtils.sendResponseWithBody;
 public class ApiAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        log.info("[Access Denied] : {} : {}", request.getAttribute("username"), accessDeniedException.getMessage());
+        log.debug("[Access Denied] url: {}, username: {}, msg: {}", request.getRequestURL(),
+                request.getAttribute("username"), accessDeniedException.getMessage());
         ApiResponse<Void> apiResponse = ApiResponse.errorWithMessage(HttpStatus.FORBIDDEN, "해당 리소스에 접근 권한이 없습니다.");
         sendResponseWithBody(response, apiResponse);
     }

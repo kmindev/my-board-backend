@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j
 @RestControllerAdvice
@@ -30,6 +31,16 @@ public class GlobalExceptionRestAdvice {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ApiResponse.errorWithMessage(HttpStatus.BAD_REQUEST, "확인할 수 없는 형태의 데이터가 들어왔습니다"));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ApiResponse<Void>> handleMethoArgumentTypeMismatchExceptions(
+            MethodArgumentTypeMismatchException e) {
+        log.error(e.getMessage(), e);
+        String msg = String.format("요청 파라미터 '%s' 는 유효하지 않습니다.", e.getValue());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.errorWithMessage(HttpStatus.BAD_REQUEST, msg));
     }
 
     @ExceptionHandler

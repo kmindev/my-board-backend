@@ -1,4 +1,4 @@
-package com.back.controler.dto;
+package com.back.controler;
 
 import com.back.secuirty.coustomoauth.Oauth2ProviderType;
 import com.back.service.Oauth2Service;

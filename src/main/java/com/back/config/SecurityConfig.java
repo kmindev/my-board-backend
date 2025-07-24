@@ -14,8 +14,6 @@ import com.back.secuirty.general.handler.ApiAuthenticationFailureHandler;
 import com.back.secuirty.general.handler.ApiAuthenticationSuccessHandler;
 import com.back.secuirty.general.handler.ApiLoginAuthenticationEntryPoint;
 import com.back.secuirty.general.handler.ApiLogoutSuccessHandler;
-import com.back.secuirty.oauth2.handler.OAuth2AuthFailureHandler;
-import com.back.secuirty.oauth2.handler.Oauth2AuthSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,6 +55,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(GET, "/v1/articles/**").permitAll()
                         .requestMatchers(GET, "/v1/comments/**").permitAll()
+                        .requestMatchers("/oauth2/**").permitAll()
+                        .requestMatchers("/login/**").permitAll()
                         .requestMatchers(SWAGGER_URLS).permitAll()
                         .requestMatchers(H2_CONSOLE_URL).permitAll()
                         .requestMatchers(LOGIN_URL).permitAll()

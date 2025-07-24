@@ -27,9 +27,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
@@ -48,10 +45,6 @@ public class SecurityConfig {
     private final ApiAccessDeniedHandler deniedHandler;
     private final ApiLoginAuthenticationEntryPoint entryPoint;
     private final ApiLogoutSuccessHandler logoutSuccessHandler;
-    private final Oauth2AuthSuccessHandler oauth2AuthSuccessHandler;
-    private final OAuth2AuthFailureHandler oauth2AuthFailureHandler;
-
-    private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -80,15 +73,7 @@ public class SecurityConfig {
                         .invalidateHttpSession(true) // 세션 무효화
                         .clearAuthentication(true) // 인증 정보 삭제
                         .deleteCookies("JSESSIONID")
-                )
-                .oauth2Login(oAuth -> oAuth.
-                        userInfoEndpoint(useInfo -> useInfo
-                                .userService(oAuth2UserService)
-                        )
-                        .successHandler(oauth2AuthSuccessHandler)
-                        .failureHandler(oauth2AuthFailureHandler)
                 );
-
         return http.build();
     }
 

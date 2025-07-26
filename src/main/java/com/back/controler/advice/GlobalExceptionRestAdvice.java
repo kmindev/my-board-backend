@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -31,6 +32,14 @@ public class GlobalExceptionRestAdvice {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ApiResponse.errorWithMessage(HttpStatus.BAD_REQUEST, "확인할 수 없는 형태의 데이터가 들어왔습니다"));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ApiResponse<Void>> handleMissingPathVariableExceptions(MissingPathVariableException e) {
+        log.error(e.getMessage(), e);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.errorWithMessage(HttpStatus.BAD_REQUEST, "요청 경로가 올바르지 않습니다."));
     }
 
     @ExceptionHandler

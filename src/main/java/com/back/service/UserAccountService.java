@@ -4,10 +4,9 @@ import com.back.domain.UserAccount;
 import com.back.domain.UserRoleType;
 import com.back.exception.UserNotFoundException;
 import com.back.repository.UserAccountRepository;
-import com.back.secuirty.coustomoauth.Oauth2UserResponse;
+import com.back.secuirty.oauth2.Oauth2UserResponse;
 import com.back.service.dto.UserAccountDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

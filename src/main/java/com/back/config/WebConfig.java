@@ -1,7 +1,7 @@
 package com.back.config;
 
 import com.back.config.interceptor.RequestTimeInterceptor;
-import com.back.secuirty.coustomoauth.Oauth2ProviderTypeConverter;
+import com.back.secuirty.oauth2.Oauth2ProviderTypeConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;

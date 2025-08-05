@@ -1,8 +1,8 @@
-package com.back.secuirty.coustomoauth;
+package com.back.secuirty.oauth2;
 
-import com.back.secuirty.coustomoauth.google.GoogleOauth2Client;
-import com.back.secuirty.coustomoauth.naver.NaverOauth2Client;
-import com.back.secuirty.coustomoauth.kakao.KakaoOauth2Client;
+import com.back.secuirty.oauth2.google.GoogleOauth2Client;
+import com.back.secuirty.oauth2.naver.NaverOauth2Client;
+import com.back.secuirty.oauth2.kakao.KakaoOauth2Client;
 import java.util.Arrays;
 import lombok.Getter;
 

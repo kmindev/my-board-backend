@@ -6,10 +6,10 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 import com.back.exception.Oauth2ProviderNotProvideException;
-import com.back.secuirty.coustomoauth.Oauth2ProviderType;
-import com.back.secuirty.coustomoauth.google.GoogleOauth2Client;
-import com.back.secuirty.coustomoauth.kakao.KakaoOauth2Client;
-import com.back.secuirty.coustomoauth.naver.NaverOauth2Client;
+import com.back.secuirty.oauth2.Oauth2ProviderType;
+import com.back.secuirty.oauth2.google.GoogleOauth2Client;
+import com.back.secuirty.oauth2.kakao.KakaoOauth2Client;
+import com.back.secuirty.oauth2.naver.NaverOauth2Client;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

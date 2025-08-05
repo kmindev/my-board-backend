@@ -1,7 +1,7 @@
-package com.back.secuirty.coustomoauth.kakao;
+package com.back.secuirty.oauth2.kakao;
 
-import com.back.secuirty.coustomoauth.Oauth2ProviderType;
-import com.back.secuirty.coustomoauth.Oauth2UserResponse;
+import com.back.secuirty.oauth2.Oauth2ProviderType;
+import com.back.secuirty.oauth2.Oauth2UserResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 

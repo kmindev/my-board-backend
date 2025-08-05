@@ -2,10 +2,10 @@ package com.back.service;
 
 import com.back.exception.AuthorizationRequestRejectedException;
 import com.back.exception.Oauth2ProviderNotProvideException;
-import com.back.secuirty.coustomoauth.Oauth2Client;
-import com.back.secuirty.coustomoauth.Oauth2ProviderType;
-import com.back.secuirty.coustomoauth.Oauth2UserResponse;
-import com.back.secuirty.coustomoauth.response.Oauth2TokenResponse;
+import com.back.secuirty.oauth2.Oauth2Client;
+import com.back.secuirty.oauth2.Oauth2ProviderType;
+import com.back.secuirty.oauth2.Oauth2UserResponse;
+import com.back.secuirty.oauth2.response.Oauth2TokenResponse;
 import com.back.service.dto.UserAccountDto;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;

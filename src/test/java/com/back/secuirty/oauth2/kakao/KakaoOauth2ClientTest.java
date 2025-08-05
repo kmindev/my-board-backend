@@ -1,4 +1,4 @@
-package com.back.secuirty.coustomoauth.kakao;
+package com.back.secuirty.oauth2.kakao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;

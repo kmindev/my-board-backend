@@ -1,4 +1,4 @@
-package com.back.secuirty.coustomoauth;
+package com.back.secuirty.oauth2;
 
 import com.back.domain.UserAccount;
 import com.back.domain.UserRoleType;

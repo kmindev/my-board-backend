@@ -1,4 +1,4 @@
-package com.back.secuirty.coustomoauth.response;
+package com.back.secuirty.oauth2.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

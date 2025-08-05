@@ -1,6 +1,6 @@
-package com.back.secuirty.coustomoauth;
+package com.back.secuirty.oauth2;
 
-import com.back.secuirty.coustomoauth.response.Oauth2TokenResponse;
+import com.back.secuirty.oauth2.response.Oauth2TokenResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface Oauth2Client {

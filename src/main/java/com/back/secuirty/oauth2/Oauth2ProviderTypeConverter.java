@@ -1,4 +1,4 @@
-package com.back.secuirty.coustomoauth;
+package com.back.secuirty.oauth2;
 
 import org.springframework.core.convert.converter.Converter;
 

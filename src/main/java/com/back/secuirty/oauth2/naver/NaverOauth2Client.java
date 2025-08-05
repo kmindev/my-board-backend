@@ -1,8 +1,8 @@
-package com.back.secuirty.coustomoauth.naver;
+package com.back.secuirty.oauth2.naver;
 
-import com.back.secuirty.coustomoauth.Oauth2Client;
-import com.back.secuirty.coustomoauth.Oauth2UserResponse;
-import com.back.secuirty.coustomoauth.response.Oauth2TokenResponse;
+import com.back.secuirty.oauth2.Oauth2Client;
+import com.back.secuirty.oauth2.Oauth2UserResponse;
+import com.back.secuirty.oauth2.response.Oauth2TokenResponse;
 import org.springframework.http.ResponseEntity;
 
 public class NaverOauth2Client implements Oauth2Client {

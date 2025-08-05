@@ -1,7 +1,7 @@
 package com.back.controler;
 
 import com.back.controler.dto.reponse.ApiResponse;
-import com.back.secuirty.coustomoauth.Oauth2ProviderType;
+import com.back.secuirty.oauth2.Oauth2ProviderType;
 import com.back.service.Oauth2Service;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

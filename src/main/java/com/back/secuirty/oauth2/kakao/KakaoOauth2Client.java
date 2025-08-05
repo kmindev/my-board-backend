@@ -1,10 +1,10 @@
-package com.back.secuirty.coustomoauth.kakao;
+package com.back.secuirty.oauth2.kakao;
 
 import com.back.exception.Oauth2TokenRequestException;
 import com.back.exception.Oauth2UserRequestException;
-import com.back.secuirty.coustomoauth.Oauth2Client;
-import com.back.secuirty.coustomoauth.Oauth2UserResponse;
-import com.back.secuirty.coustomoauth.response.Oauth2TokenResponse;
+import com.back.secuirty.oauth2.Oauth2Client;
+import com.back.secuirty.oauth2.Oauth2UserResponse;
+import com.back.secuirty.oauth2.response.Oauth2TokenResponse;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

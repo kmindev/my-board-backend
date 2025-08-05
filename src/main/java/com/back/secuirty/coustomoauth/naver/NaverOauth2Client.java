@@ -1,11 +1,18 @@
 package com.back.secuirty.coustomoauth.naver;
 
 import com.back.secuirty.coustomoauth.Oauth2Client;
+import com.back.secuirty.coustomoauth.Oauth2UserResponse;
+import com.back.secuirty.coustomoauth.response.Oauth2TokenResponse;
 import org.springframework.http.ResponseEntity;
 
-public class NaverOauth2Client implements Oauth2Client  {
+public class NaverOauth2Client implements Oauth2Client {
     @Override
     public ResponseEntity<Void> redirectToAuthorizationServer() {
+        return null;
+    }
+
+    @Override
+    public Oauth2TokenResponse requestToken(String code) {
         return null;
     }
 
@@ -13,4 +20,10 @@ public class NaverOauth2Client implements Oauth2Client  {
     public boolean supports() {
         return false;
     }
+
+    @Override
+    public Oauth2UserResponse requestUserInfo(String accessToken) {
+        return null;
+    }
+
 }

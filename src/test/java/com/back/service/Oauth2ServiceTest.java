@@ -33,12 +33,17 @@ class Oauth2ServiceTest {
     private NaverOauth2Client naverClient;
 
     @Mock
-    private GoogleOauth2Client googleOauth2Client;
+    private UserAccountService userAccountService;
 
+    @Mock
+    private LoginService loginService;
+
+    @Mock
+    private GoogleOauth2Client googleOauth2Client;
 
     @BeforeEach
     void setUp() {
-        sut = new Oauth2Service(List.of(kakaoClient));
+        sut = new Oauth2Service(List.of(kakaoClient), userAccountService, loginService);
     }
 
     @DisplayName("Provider 타입에 해당되는 Oauth2 클라이언트를 찾고, 지원한다면 요청을 지시한다.")

@@ -1,11 +1,18 @@
 package com.back.secuirty.coustomoauth.kakao;
 
+import com.back.exception.Oauth2TokenRequestException;
+import com.back.exception.Oauth2UserRequestException;
 import com.back.secuirty.coustomoauth.Oauth2Client;
+import com.back.secuirty.coustomoauth.Oauth2UserResponse;
+import com.back.secuirty.coustomoauth.response.Oauth2TokenResponse;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -19,6 +26,8 @@ public class KakaoOauth2Client implements Oauth2Client {
     private String kakaoAuthorizationUri;
     @Value("${spring.security.oauth2.client.provider.kakao.token-uri}")
     private String kakaoTokenUri;
+    @Value("${spring.security.oauth2.client.provider.kakao.user-info-uri}")
+    private String kakaoUserInfoUri;
     @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
     private String kakaoClientId;
     @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
@@ -40,6 +49,57 @@ public class KakaoOauth2Client implements Oauth2Client {
                 .uri(uri)
                 .retrieve()
                 .toBodilessEntity();
+    }
+
+    @Override
+    public Oauth2TokenResponse requestToken(String code) {
+        String uri = UriComponentsBuilder
+                .fromUriString(kakaoTokenUri)
+                .build()
+                .toUriString();
+        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        formData.add("grant_type", "authorization_code");
+        formData.add("client_id", kakaoClientId);
+        formData.add("redirect_uri", kakaoRedirectUri);
+        formData.add("code", code);
+
+        ResponseEntity<Oauth2TokenResponse> responseEntity = restClient.post()
+                .uri(uri)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .body(formData)
+                .retrieve()
+                .toEntity(Oauth2TokenResponse.class);
+        Oauth2TokenResponse responseBody = responseEntity.getBody();
+        validateTokenResponse(responseBody);
+        return responseBody;
+    }
+
+    @Override
+    public Oauth2UserResponse requestUserInfo(String accessToken) {
+        String uri = UriComponentsBuilder
+                .fromUriString(kakaoUserInfoUri)
+                .build()
+                .toUriString();
+        ResponseEntity<KakaoOauth2UserResponse> responseEntity = restClient.get()
+                .uri(uri)
+                .header("Authorization", "Bearer " + accessToken)
+                .retrieve()
+                .toEntity(KakaoOauth2UserResponse.class);
+        KakaoOauth2UserResponse response = responseEntity.getBody();
+        validateOauth2UserResponse(response);
+        return response.toOauth2Response();
+    }
+
+    private void validateOauth2UserResponse(KakaoOauth2UserResponse response) {
+        if (response == null || response.id() == null || response.nickname() == null) {
+            throw new Oauth2UserRequestException();
+        }
+    }
+
+    private void validateTokenResponse(Oauth2TokenResponse responseBody) {
+        if (responseBody == null || responseBody.accessToken() == null) {
+            throw new Oauth2TokenRequestException();
+        }
     }
 
     @Override

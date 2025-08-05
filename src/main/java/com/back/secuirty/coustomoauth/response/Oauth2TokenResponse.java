@@ -1,4 +1,4 @@
-package com.back.secuirty.coustomoauth.kakao.response;
+package com.back.secuirty.coustomoauth.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     "expires_in":43199,
     "refresh_token":"${REFRESH_TOKEN}",
     "refresh_token_expires_in":5184000,
-    "scope":"account_email profile"
+    "scope":"account_email profile" profile_nickname
 }
  */
-public record KakaoTokenResponse(
+public record Oauth2TokenResponse(
         @JsonProperty("token_type") String tokenType,
         @JsonProperty("access_token") String accessToken,
         @JsonProperty("id_token") String idToken,

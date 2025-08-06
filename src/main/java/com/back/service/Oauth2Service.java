@@ -22,9 +22,6 @@ public class Oauth2Service {
     private final LoginService loginService;
 
     public ResponseEntity<Void> authorizeRequest(Oauth2ProviderType oauth2ProviderType) {
-        if (oauth2ProviderType == null) {
-            throw new Oauth2ProviderNotProvideException();
-        }
         Oauth2Client oauth2Client = findOauth2ClientByType(oauth2ProviderType);
         return oauth2Client.redirectToAuthorizationServer();
     }
@@ -33,10 +30,6 @@ public class Oauth2Service {
             Oauth2ProviderType oauth2ProviderType,
             String code, String error, HttpServletRequest request
     ) {
-        if (oauth2ProviderType == null) {
-            throw new Oauth2ProviderNotProvideException();
-        }
-
         if (code == null) {
             throw new AuthorizationRequestRejectedException(error);
         }
@@ -57,6 +50,10 @@ public class Oauth2Service {
     }
 
     private Oauth2Client findOauth2ClientByType(Oauth2ProviderType type) {
+        if (type == null) {
+            throw new Oauth2ProviderNotProvideException();
+        }
+
         return oauth2Clients.stream()
                 .filter(client -> type.getOauthClient().isAssignableFrom(client.getClass()))
                 .filter(Oauth2Client::supports)

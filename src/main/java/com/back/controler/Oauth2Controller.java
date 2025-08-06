@@ -3,6 +3,10 @@ package com.back.controler;
 import com.back.controler.dto.reponse.ApiResponse;
 import com.back.secuirty.oauth2.Oauth2ProviderType;
 import com.back.service.Oauth2Service;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "OAuth2 API")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -19,9 +24,20 @@ public class Oauth2Controller extends BaseController {
 
     private final Oauth2Service oauth2Service;
 
+    @Operation(
+            summary = "OAuth2 로그인 요청 API (Swagger 테스트 금지)",
+            description = "⚠️ 이 API는 브라우저 리다이렉트를 유도하는 API로, Swagger에서 호출해도 정상 작동하지 않습니다. 직접 브라우저를 통해 테스트하세요."
+    )
     @GetMapping("/oauth2/authorization/{oauth2ProviderType}")
     public ResponseEntity<Void> authorize(
-            @PathVariable("oauth2ProviderType") Oauth2ProviderType oauth2ProviderType,
+            @PathVariable("oauth2ProviderType")
+            @Parameter(
+                    name = "oauth2ProviderType",
+                    description = "OAuth2 공급자 타입 (예: kakao, naver, google)",
+                    required = true,
+                    example = "kakao"
+            )
+            Oauth2ProviderType oauth2ProviderType,
             HttpServletRequest httpServletRequest
     ) {
         requestLog(log, httpServletRequest);
@@ -30,6 +46,11 @@ public class Oauth2Controller extends BaseController {
         return responseEntity;
     }
 
+    @Operation(
+            summary = "OAuth2 로그인 콜백 API (Swagger 테스트 금지))",
+            description = "⚠️ 이 API는 OAuth2에서 리다이렉트 할 때 사용하는 API 입니다. Swagger에서 호출해도 정상 작동하지 않습니다."
+    )
+    @Hidden
     @GetMapping("/login/oauth2/code/{oauth2ProviderType}")
     public ResponseEntity<ApiResponse<Void>> authorizationCallback(
             @PathVariable("oauth2ProviderType") Oauth2ProviderType oauth2ProviderType,

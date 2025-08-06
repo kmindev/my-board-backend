@@ -12,11 +12,20 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionRestAdvice {
+
+    @ExceptionHandler
+    public ResponseEntity<ApiResponse<Void>> handleRestClientException(RestClientException e) {
+        log.error(e.getMessage(), e);
+        return ResponseEntity
+                .status(HttpStatus.BAD_GATEWAY)
+                .body(ApiResponse.errorWithMessage(HttpStatus.BAD_GATEWAY, "외부 서비스 호출에 실패했습니다."));
+    }
 
     @ExceptionHandler
     public ResponseEntity<ApiResponse<Void>> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {

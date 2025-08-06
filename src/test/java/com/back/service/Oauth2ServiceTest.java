@@ -6,6 +6,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 
+import com.back.domain.UserRoleType;
 import com.back.exception.ApplicationException;
 import com.back.exception.AuthorizationRequestRejectedException;
 import com.back.exception.Oauth2ProviderNotProvideException;
@@ -103,7 +104,7 @@ class Oauth2ServiceTest {
         Oauth2UserResponse userResponse = new Oauth2UserResponse(123456789L, "nickname", providerType);
         UserAccountDto userAccountDto = UserAccountDto.of(
                 userResponse.userId(), "encoded-pw", null, userResponse.nickname(), null,
-                userResponse.registrationId(), userResponse.providerId()
+                userResponse.registrationId(), userResponse.providerId(), UserRoleType.USER
         );
 
         given(kakaoClient.supports()).willReturn(true);

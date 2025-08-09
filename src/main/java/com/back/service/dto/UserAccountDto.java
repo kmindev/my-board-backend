@@ -20,10 +20,13 @@ public record UserAccountDto(
         String modifiedBy // 수정자
 ) {
 
-    public static UserAccountDto of(String userId, String userPassword, String email, String nickname, String memo, String socialProvider, String socialId) {
+    public static UserAccountDto of(
+            String userId, String userPassword, String email, String nickname,
+            String memo, String socialProvider, String socialId, UserRoleType role
+    ) {
         return new UserAccountDto(
                 userId, userPassword, email, nickname, memo, socialProvider, socialId,
-                null, null, null, null, null
+                role, null, null, null, null
         );
     }
 

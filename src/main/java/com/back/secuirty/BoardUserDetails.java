@@ -3,14 +3,12 @@ package com.back.secuirty;
 import com.back.domain.UserAccount;
 import com.back.domain.UserRoleType;
 import com.back.service.dto.UserAccountDto;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public record BoardUserDetails(
         String userId,
@@ -20,12 +18,13 @@ public record BoardUserDetails(
         String memo,
         String socialProvider,
         String socialId,
+        UserRoleType role,
         Collection<? extends GrantedAuthority> authorities,
         Map<String, Object> oAuth2Attributes
-) implements UserDetails, OAuth2User {
+) implements UserDetails {
 
     public UserAccountDto toDto() {
-        return UserAccountDto.of(userId, userPassword, email, nickname, memo, socialProvider, socialId);
+        return UserAccountDto.of(userId, userPassword, email, nickname, memo, socialProvider, socialId, role);
     }
 
     public static BoardUserDetails from(UserAccount userAccount) {
@@ -37,6 +36,7 @@ public record BoardUserDetails(
                 userAccount.getMemo(),
                 userAccount.getSocialProvider(),
                 userAccount.getSocialId(),
+                userAccount.getRole(),
                 List.of(new SimpleGrantedAuthority(userAccount.getRole().getName())),
                 Map.of()
         );
@@ -51,6 +51,7 @@ public record BoardUserDetails(
                 userAccountDto.memo(),
                 userAccountDto.socialProvider(),
                 userAccountDto.socialId(),
+                userAccountDto.role(),
                 List.of(new SimpleGrantedAuthority(userAccountDto.role().getName())),
                 Map.of()
         );
@@ -65,6 +66,7 @@ public record BoardUserDetails(
                 userAccountDto.memo(),
                 userAccountDto.socialProvider(),
                 userAccountDto.socialId(),
+                userAccountDto.role(),
                 List.of(new SimpleGrantedAuthority(userAccountDto.role().getName())),
                 oAuth2Attributes
         );
@@ -101,18 +103,8 @@ public record BoardUserDetails(
     }
 
     @Override
-    public Map<String, Object> getAttributes() {
-        return oAuth2Attributes;
-    }
-
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
-    }
-
-    @Override
-    public String getName() {
-        return userId;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.back.controler;
 
+import static com.back.config.TestSecurityUtil.boardUserDetails;
 import static com.back.controler.dto.request.NewCommentRequestFactory.createNewCommentRequest;
 import static com.back.service.dto.ArticleWithCommentsWithHashtagsDtoFactory.createArticleWithCommentsWithHashtagsDto;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,24 +14,42 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.back.config.JsonDataEncoder;
+import com.back.config.SecurityConfig;
 import com.back.config.UnsecuredWebMvcTest;
 import com.back.controler.dto.request.NewCommentRequest;
+import com.back.domain.UserRoleType;
 import com.back.exception.ArticleNotFoundException;
 import com.back.exception.CommentNotFoundException;
+import com.back.secuirty.general.handler.ApiAccessDeniedHandler;
+import com.back.secuirty.general.handler.ApiAuthenticationFailureHandler;
+import com.back.secuirty.general.handler.ApiAuthenticationSuccessHandler;
+import com.back.secuirty.general.handler.ApiLoginAuthenticationEntryPoint;
+import com.back.secuirty.general.handler.ApiLogoutSuccessHandler;
 import com.back.service.CommentService;
 import com.back.service.dto.ArticleWithCommentsWithHashtagsDto;
 import com.back.service.dto.NewCommentRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayName("컨트롤러 - 댓글")
-@Import({JsonDataEncoder.class})
-@UnsecuredWebMvcTest(controllers = CommentController.class)
+@Import({
+        JsonDataEncoder.class,
+        SecurityConfig.class,
+        AuthenticationConfiguration.class,
+        ApiAuthenticationSuccessHandler.class,
+        ApiAuthenticationFailureHandler.class,
+        ApiAccessDeniedHandler.class,
+        ApiLoginAuthenticationEntryPoint.class,
+        ApiLogoutSuccessHandler.class
+})
+@WebMvcTest(controllers = CommentController.class)
 public class CommentControllerTest {
 
     @Autowired
@@ -51,6 +70,7 @@ public class CommentControllerTest {
 
         // When & Then
         mvc.perform(post("/v1/comments")
+                        .with(boardUserDetails("user1", UserRoleType.USER))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonDataEncoder.encode(request)))
                 .andExpect(status().isOk())
@@ -70,6 +90,7 @@ public class CommentControllerTest {
 
         // When & Then
         mvc.perform(post("/v1/comments")
+                        .with(boardUserDetails("user1", UserRoleType.USER))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonDataEncoder.encode(request)))
                 .andExpect(status().is4xxClientError())
@@ -87,7 +108,8 @@ public class CommentControllerTest {
         willDoNothing().given(commentService).deleteComment(any(), any());
 
         // When & Then
-        mvc.perform(delete("/v1/comments/{commentId}", commentId))
+        mvc.perform(delete("/v1/comments/{commentId}", commentId)
+                        .with(boardUserDetails("user1", UserRoleType.USER)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.data").isEmpty())
@@ -104,7 +126,8 @@ public class CommentControllerTest {
         willThrow(exception).given(commentService).deleteComment(any(), any());
 
         // When & Then
-        mvc.perform(delete("/v1/comments/{commentId}", commentId))
+        mvc.perform(delete("/v1/comments/{commentId}", commentId)
+                        .with(boardUserDetails("user1", UserRoleType.USER)))
                 .andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.code").value(400))
                 .andExpect(jsonPath("$.data").isEmpty())

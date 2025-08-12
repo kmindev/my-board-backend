@@ -1,12 +1,28 @@
 package com.back.controler;
 
+import static com.back.controler.dto.request.ArticleUpdateRequestFactory.createArticleUpdateRequest;
+import static com.back.controler.dto.request.NewArticleRequestFactory.createDefaultNewArticleRequest;
+import static com.back.service.dto.ArticleWithCommentsWithHashtagsDtoFactory.createArticleWithCommentsWithHashtagsDto;
+import static com.back.service.dto.ArticleWithHashtagsDtoFactory.createArticleWithHashtagsDto;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.willThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.back.config.JsonDataEncoder;
 import com.back.config.UnsecuredWebMvcTest;
 import com.back.controler.dto.request.ArticleUpdateRequest;
 import com.back.controler.dto.request.NewArticleRequest;
 import com.back.domain.constant.SearchType;
 import com.back.exception.ArticleNotFoundException;
-import com.back.exception.UnexpectedSearchTypeException;
 import com.back.exception.UserMismatchException;
 import com.back.exception.UserNotFoundException;
 import com.back.service.ArticleService;
@@ -26,17 +42,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static com.back.controler.dto.request.ArticleUpdateRequestFactory.createArticleUpdateRequest;
-import static com.back.controler.dto.request.NewArticleRequestFactory.createDefaultNewArticleRequest;
-import static com.back.service.dto.ArticleWithCommentsWithHashtagsDtoFactory.createArticleWithCommentsWithHashtagsDto;
-import static com.back.service.dto.ArticleWithHashtagsDtoFactory.createArticleWithHashtagsDto;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @DisplayName("컨트롤러 - 게시글")
@@ -161,7 +166,7 @@ class ArticleControllerTest {
         given(articleService.getArticleDetails(eq(articleId))).willReturn(dto);
 
         // When & Then
-        mvc.perform(get("/v1/articles/" + articleId))
+        mvc.perform(get("/v1/articles/{articleId}", articleId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.data").exists())
@@ -178,7 +183,7 @@ class ArticleControllerTest {
         given(articleService.getArticleDetails(eq(nonExitingArticleId))).willThrow(exception);
 
         // When & Then
-        mvc.perform(get("/v1/articles/" + nonExitingArticleId))
+        mvc.perform(get("/v1/articles/{articleId}", nonExitingArticleId))
                 .andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.code").value(400))
                 .andExpect(jsonPath("$.data").isEmpty())
@@ -196,7 +201,7 @@ class ArticleControllerTest {
         given(articleService.updateArticle(any(ArticleUpdateDto.class))).willReturn(articleWithHashtagsDto);
 
         // When & Then
-        mvc.perform(patch("/v1/articles/" + articleId)
+        mvc.perform(patch("/v1/articles/{articleId}", articleId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonDataEncoder.encode(request)))
                 .andExpect(status().isOk())
@@ -216,7 +221,7 @@ class ArticleControllerTest {
         given(articleService.updateArticle(any(ArticleUpdateDto.class))).willThrow(exception);
 
         // When & Then
-        mvc.perform(patch("/v1/articles/" + articleId)
+        mvc.perform(patch("/v1/articles/{articleId}", articleId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonDataEncoder.encode(request)))
                 .andExpect(status().is4xxClientError())
@@ -235,7 +240,7 @@ class ArticleControllerTest {
         willDoNothing().given(articleService).deleteArticle(any(), any());
 
         // When & Then
-        mvc.perform(delete("/v1/articles/" + articleId))
+        mvc.perform(delete("/v1/articles/{articleId}", articleId))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.data").isEmpty())
@@ -252,7 +257,7 @@ class ArticleControllerTest {
         willThrow(exception).given(articleService).deleteArticle(any(), any());
 
         // When & Then
-        mvc.perform(delete("/v1/articles/" + articleId))
+        mvc.perform(delete("/v1/articles/{articleId}", articleId))
                 .andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.code").value(400))
                 .andExpect(jsonPath("$.data").isEmpty())

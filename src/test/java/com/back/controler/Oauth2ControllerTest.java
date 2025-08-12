@@ -49,7 +49,7 @@ class Oauth2ControllerTest {
         given(oauth2Service.authorizeRequest(oauth2ProviderType)).willReturn(responseEntity);
 
         // When & Then
-        mvc.perform(get("/oauth2/authorization/" + oauth2ProviderType.getRequest()))
+        mvc.perform(get("/oauth2/authorization/{providerType}", oauth2ProviderType.getRequest()))
                 .andExpect(status().isFound());
         then(oauth2Service).should().authorizeRequest(oauth2ProviderType);
     }
@@ -65,7 +65,7 @@ class Oauth2ControllerTest {
         );
 
         // When & Then
-        mvc.perform(get("/login/oauth2/code/" + oauth2ProviderType.getRequest())
+        mvc.perform(get("/login/oauth2/code/{providerType}", oauth2ProviderType.getRequest())
                         .param("code", code))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200))
@@ -86,7 +86,7 @@ class Oauth2ControllerTest {
         );
 
         // When & Then
-        mvc.perform(get("/login/oauth2/code/" + oauth2ProviderType.getRequest())
+        mvc.perform(get("/login/oauth2/code/{providerType}", oauth2ProviderType.getRequest())
                         .param("error", error))
                 .andExpect(status().is5xxServerError());
         then(oauth2Service).should().handleAuthorizationCallback(

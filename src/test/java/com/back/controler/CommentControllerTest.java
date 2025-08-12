@@ -1,5 +1,17 @@
 package com.back.controler;
 
+import static com.back.controler.dto.request.NewCommentRequestFactory.createNewCommentRequest;
+import static com.back.service.dto.ArticleWithCommentsWithHashtagsDtoFactory.createArticleWithCommentsWithHashtagsDto;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.willThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.back.config.JsonDataEncoder;
 import com.back.config.UnsecuredWebMvcTest;
 import com.back.controler.dto.request.NewCommentRequest;
@@ -15,15 +27,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static com.back.controler.dto.request.NewCommentRequestFactory.createNewCommentRequest;
-import static com.back.service.dto.ArticleWithCommentsWithHashtagsDtoFactory.createArticleWithCommentsWithHashtagsDto;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("컨트롤러 - 댓글")
 @Import({JsonDataEncoder.class})
@@ -84,7 +87,7 @@ public class CommentControllerTest {
         willDoNothing().given(commentService).deleteComment(any(), any());
 
         // When & Then
-        mvc.perform(delete("/v1/comments/" + commentId))
+        mvc.perform(delete("/v1/comments/{commentId}", commentId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.data").isEmpty())
@@ -101,7 +104,7 @@ public class CommentControllerTest {
         willThrow(exception).given(commentService).deleteComment(any(), any());
 
         // When & Then
-        mvc.perform(delete("/v1/comments/" + commentId))
+        mvc.perform(delete("/v1/comments/{commentId}", commentId))
                 .andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.code").value(400))
                 .andExpect(jsonPath("$.data").isEmpty())

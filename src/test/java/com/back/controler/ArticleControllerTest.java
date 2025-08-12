@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.back.config.JsonDataEncoder;
 import com.back.config.SecurityConfig;
+import com.back.controler.advice.GlobalExceptionRestAdvice;
 import com.back.controler.dto.request.ArticleUpdateRequest;
 import com.back.controler.dto.request.NewArticleRequest;
 import com.back.domain.UserRoleType;
@@ -49,7 +50,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 
 @DisplayName("컨트롤러 - 게시글")
@@ -71,6 +74,8 @@ class ArticleControllerTest {
     @Autowired
     private JsonDataEncoder jsonDataEncoder;
 
+    @MockitoSpyBean
+    private GlobalExceptionRestAdvice globalExceptionRestAdvice;
     @MockitoBean
     private ArticleService articleService;
 
@@ -94,7 +99,23 @@ class ArticleControllerTest {
         then(articleService).should().newArticle(any(NewArticleRequestDto.class));
     }
 
-    @DisplayName("게시글 생성 요청 - 실패")
+    @DisplayName("게시글 생성 요청 - 실패(로그인 하지 않은 경우)")
+    @Test
+    void givenNewArticleRequestWithoutUser_whenNewArticle_thenReturns4xx() throws Exception {
+        // Given
+        NewArticleRequest request = createDefaultNewArticleRequest();
+
+        // When & Then
+        mvc.perform(post("/v1/articles")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonDataEncoder.encode(request)))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.code").value(400))
+                .andExpect(jsonPath("$.data").isEmpty())
+                .andExpect(jsonPath("$.message").value("로그인이 필요합니다."));
+    }
+
+    @DisplayName("게시글 생성 요청 - 실패(유저를 찾을 수 없을 때)")
     @Test
     void givenNewArticleRequest_whenNewArticle_thenReturns4xx() throws Exception {
         // Given
@@ -112,6 +133,7 @@ class ArticleControllerTest {
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andExpect(jsonPath("$.message").value(exception.getMessage()));
         then(articleService).should().newArticle(any(NewArticleRequestDto.class));
+        then(globalExceptionRestAdvice).should().applicationException(eq(exception));
     }
 
     @DisplayName("게시글 조건 검색 - 성공")
@@ -158,7 +180,7 @@ class ArticleControllerTest {
         then(articleService).should().searchArticles(pageable, null, null);
     }
 
-    @DisplayName("게시글 검색 - 실패")
+    @DisplayName("게시글 검색 - 실패(잘못된 검색 타입)")
     @Test
     void givenNonExitingSearchType_whenNewArticle_thenReturns4xx() throws Exception {
         // Given
@@ -173,6 +195,8 @@ class ArticleControllerTest {
                 .andExpect(jsonPath("$.code").value(400))
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andExpect(jsonPath("$.message").isNotEmpty());
+        then(globalExceptionRestAdvice).should().handleMethoArgumentTypeMismatchExceptions(
+                any(MethodArgumentTypeMismatchException.class));
     }
 
     @DisplayName("게시글 상세 조회 - 성공")
@@ -192,9 +216,9 @@ class ArticleControllerTest {
         then(articleService).should().getArticleDetails(eq(articleId));
     }
 
-    @DisplayName("게시글 상세 조회 - 실패")
+    @DisplayName("게시글 상세 조회 - 실패(게시글을 찾을 수 없을 때)")
     @Test
-    void givenNonExitingArticleId_whenGetArticleDetails_thenReturns200() throws Exception {
+    void givenNonExitingArticleId_whenGetArticleDetails_thenReturns4xx() throws Exception {
         // Given
         Long nonExitingArticleId = 100L;
         ArticleNotFoundException exception = new ArticleNotFoundException();
@@ -207,6 +231,7 @@ class ArticleControllerTest {
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andExpect(jsonPath("$.message").value(exception.getMessage()));
         then(articleService).should().getArticleDetails(eq(nonExitingArticleId));
+        then(globalExceptionRestAdvice).should().applicationException(eq(exception));
     }
 
     @DisplayName("게시글 수정 - 성공")
@@ -230,9 +255,26 @@ class ArticleControllerTest {
         then(articleService).should().updateArticle(any(ArticleUpdateDto.class));
     }
 
-    @DisplayName("게시글 수정 - 실패")
+    @DisplayName("게시글 수정 - 실패(로그인 하지 않았을 때)")
     @Test
-    void givenArticleUpdateRequest_whenUpdateArticle_thenReturns4xx() throws Exception {
+    void givenArticleUpdateRequestWithoutUser_whenUpdateArticle_thenReturns4xx() throws Exception {
+        // Given
+        Long articleId = 1L;
+        ArticleUpdateRequest request = createArticleUpdateRequest();
+
+        // When & Then
+        mvc.perform(patch("/v1/articles/{articleId}", articleId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonDataEncoder.encode(request)))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.code").value(400))
+                .andExpect(jsonPath("$.data").isEmpty())
+                .andExpect(jsonPath("$.message").value("로그인이 필요합니다."));
+    }
+
+    @DisplayName("게시글 수정 - 실패(작성자가 일치하지 않을 때)")
+    @Test
+    void givenArticleUpdateRequestAndInvalidUser_whenUpdateArticle_thenReturns4xx() throws Exception {
         // Given
         Long articleId = 1L;
         ArticleUpdateRequest request = createArticleUpdateRequest();
@@ -249,8 +291,8 @@ class ArticleControllerTest {
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andExpect(jsonPath("$.message").value(exception.getMessage()));
         then(articleService).should().updateArticle(any(ArticleUpdateDto.class));
+        then(globalExceptionRestAdvice).should().applicationException(eq(exception));
     }
-
 
     @DisplayName("게시글 삭제 - 성공")
     @Test
@@ -269,9 +311,23 @@ class ArticleControllerTest {
         then(articleService).should().deleteArticle(any(), any());
     }
 
-    @DisplayName("게시글 삭제 - 실패")
+    @DisplayName("게시글 삭제 - 실패(로그인 하지 않았을 때)")
     @Test
-    void givenArticleIdAndUserId_whenDeleteArticle_thenReturns4xx() throws Exception {
+    void givenArticleIdWithoutUser_whenDeleteArticle_thenReturns4xx() throws Exception {
+        // Given
+        Long articleId = 1L;
+
+        // When & Then
+        mvc.perform(delete("/v1/articles/{articleId}", articleId))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.code").value(400))
+                .andExpect(jsonPath("$.data").isEmpty())
+                .andExpect(jsonPath("$.message").value("로그인이 필요합니다."));
+    }
+
+    @DisplayName("게시글 삭제 - 실패(작성자가 일치하지 않을 때)")
+    @Test
+    void givenArticleIdAndInvalidUser_whenDeleteArticle_thenReturns4xx() throws Exception {
         // Given
         Long articleId = 1L;
         UserMismatchException exception = new UserMismatchException();
@@ -285,6 +341,7 @@ class ArticleControllerTest {
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andExpect(jsonPath("$.message").value(exception.getMessage()));
         then(articleService).should().deleteArticle(any(), any());
+        then(globalExceptionRestAdvice).should().applicationException(eq(exception));
     }
 
 }

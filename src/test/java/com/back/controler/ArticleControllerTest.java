@@ -1,5 +1,6 @@
 package com.back.controler;
 
+import static com.back.config.TestSecurityUtil.boardUserDetails;
 import static com.back.controler.dto.request.ArticleUpdateRequestFactory.createArticleUpdateRequest;
 import static com.back.controler.dto.request.NewArticleRequestFactory.createDefaultNewArticleRequest;
 import static com.back.service.dto.ArticleWithCommentsWithHashtagsDtoFactory.createArticleWithCommentsWithHashtagsDto;
@@ -18,13 +19,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.back.config.JsonDataEncoder;
-import com.back.config.UnsecuredWebMvcTest;
+import com.back.config.SecurityConfig;
 import com.back.controler.dto.request.ArticleUpdateRequest;
 import com.back.controler.dto.request.NewArticleRequest;
+import com.back.domain.UserRoleType;
 import com.back.domain.constant.SearchType;
 import com.back.exception.ArticleNotFoundException;
 import com.back.exception.UserMismatchException;
 import com.back.exception.UserNotFoundException;
+import com.back.secuirty.general.handler.ApiAccessDeniedHandler;
+import com.back.secuirty.general.handler.ApiAuthenticationFailureHandler;
+import com.back.secuirty.general.handler.ApiAuthenticationSuccessHandler;
+import com.back.secuirty.general.handler.ApiLoginAuthenticationEntryPoint;
+import com.back.secuirty.general.handler.ApiLogoutSuccessHandler;
 import com.back.service.ArticleService;
 import com.back.service.dto.ArticleUpdateDto;
 import com.back.service.dto.ArticleWithCommentsWithHashtagsDto;
@@ -33,21 +40,30 @@ import com.back.service.dto.NewArticleRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 
 @DisplayName("컨트롤러 - 게시글")
-@Import({JsonDataEncoder.class})
-@UnsecuredWebMvcTest(controllers = ArticleController.class)
-@AutoConfigureMockMvc(addFilters = false)
+@Import({
+        JsonDataEncoder.class,
+        SecurityConfig.class,
+        AuthenticationConfiguration.class,
+        ApiAuthenticationSuccessHandler.class,
+        ApiAuthenticationFailureHandler.class,
+        ApiAccessDeniedHandler.class,
+        ApiLoginAuthenticationEntryPoint.class,
+        ApiLogoutSuccessHandler.class
+})
+@WebMvcTest(controllers = ArticleController.class)
 class ArticleControllerTest {
 
     @Autowired
@@ -68,6 +84,7 @@ class ArticleControllerTest {
 
         // When & Then
         mvc.perform(post("/v1/articles")
+                        .with(boardUserDetails("user1", UserRoleType.USER))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonDataEncoder.encode(request)))
                 .andExpect(status().isOk())
@@ -87,6 +104,7 @@ class ArticleControllerTest {
 
         // When & Then
         mvc.perform(post("/v1/articles")
+                        .with(boardUserDetails("user1", UserRoleType.USER))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonDataEncoder.encode(request)))
                 .andExpect(status().is4xxClientError())
@@ -202,6 +220,7 @@ class ArticleControllerTest {
 
         // When & Then
         mvc.perform(patch("/v1/articles/{articleId}", articleId)
+                        .with(boardUserDetails("user1", UserRoleType.USER))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonDataEncoder.encode(request)))
                 .andExpect(status().isOk())
@@ -222,6 +241,7 @@ class ArticleControllerTest {
 
         // When & Then
         mvc.perform(patch("/v1/articles/{articleId}", articleId)
+                        .with(boardUserDetails("user1", UserRoleType.USER))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonDataEncoder.encode(request)))
                 .andExpect(status().is4xxClientError())
@@ -240,7 +260,8 @@ class ArticleControllerTest {
         willDoNothing().given(articleService).deleteArticle(any(), any());
 
         // When & Then
-        mvc.perform(delete("/v1/articles/{articleId}", articleId))
+        mvc.perform(delete("/v1/articles/{articleId}", articleId)
+                        .with(boardUserDetails("user1", UserRoleType.USER)))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.data").isEmpty())
@@ -257,7 +278,8 @@ class ArticleControllerTest {
         willThrow(exception).given(articleService).deleteArticle(any(), any());
 
         // When & Then
-        mvc.perform(delete("/v1/articles/{articleId}", articleId))
+        mvc.perform(delete("/v1/articles/{articleId}", articleId)
+                        .with(boardUserDetails("user1", UserRoleType.USER)))
                 .andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.code").value(400))
                 .andExpect(jsonPath("$.data").isEmpty())

@@ -4,6 +4,7 @@ import static com.back.config.TestSecurityUtil.boardUserDetails;
 import static com.back.controler.dto.request.NewCommentRequestFactory.createNewCommentRequest;
 import static com.back.service.dto.ArticleWithCommentsWithHashtagsDtoFactory.createArticleWithCommentsWithHashtagsDto;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
@@ -16,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.back.config.JsonDataEncoder;
 import com.back.config.SecurityConfig;
 import com.back.config.UnsecuredWebMvcTest;
+import com.back.controler.advice.GlobalExceptionRestAdvice;
 import com.back.controler.dto.request.NewCommentRequest;
 import com.back.domain.UserRoleType;
 import com.back.exception.ArticleNotFoundException;

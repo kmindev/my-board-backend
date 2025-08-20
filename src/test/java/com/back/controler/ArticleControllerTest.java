@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.back.config.JsonDataEncoder;
 import com.back.config.SecurityConfig;
+import com.back.controler.advice.GlobalExceptionRestAdvice;
 import com.back.controler.dto.request.ArticleUpdateRequest;
 import com.back.controler.dto.request.NewArticleRequest;
 import com.back.domain.UserRoleType;

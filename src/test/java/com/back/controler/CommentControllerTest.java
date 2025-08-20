@@ -36,6 +36,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayName("컨트롤러 - 댓글")
@@ -59,6 +60,8 @@ public class CommentControllerTest {
 
     @MockitoBean
     private CommentService commentService;
+    @MockitoSpyBean
+    private GlobalExceptionRestAdvice globalExceptionRestAdvice;
 
     @DisplayName("댓글 등록 요청 - 성공")
     @Test
@@ -80,9 +83,25 @@ public class CommentControllerTest {
         then(commentService).should().newComment(any(NewCommentRequestDto.class));
     }
 
-    @DisplayName("댓글 등록 요청 - 실페")
+    @DisplayName("댓글 등록 요청 - 실패(로그인을 안한 경우)")
     @Test
-    void givenNewCommentRequest_whenNewComment_thenReturns4xx() throws Exception {
+    void givenNewCommentRequestWithoutUser_whenNewComment_thenReturns4xx() throws Exception {
+        // Given
+        NewCommentRequest request = createNewCommentRequest();
+
+        // When & Then
+        mvc.perform(post("/v1/comments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonDataEncoder.encode(request)))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.code").value(400))
+                .andExpect(jsonPath("$.data").isEmpty())
+                .andExpect(jsonPath("$.message").value("로그인이 필요합니다."));
+    }
+
+    @DisplayName("댓글 등록 요청 - 실패(게시글을 찾을 수 없을 때)")
+    @Test
+    void givenNewCommentRequestAndNotExistingArticleId_whenNewComment_thenReturns4xx() throws Exception {
         // Given
         NewCommentRequest request = createNewCommentRequest();
         ArticleNotFoundException exception = new ArticleNotFoundException();
@@ -98,6 +117,7 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andExpect(jsonPath("$.message").value(exception.getMessage()));
         then(commentService).should().newComment(any(NewCommentRequestDto.class));
+        then(globalExceptionRestAdvice).should().applicationException(eq(exception));
     }
 
     @DisplayName("댓글 삭제 요청 - 성공")
@@ -117,9 +137,23 @@ public class CommentControllerTest {
         then(commentService).should().deleteComment(any(), any());
     }
 
-    @DisplayName("댓글 삭제 요청 - 실패")
+    @DisplayName("댓글 삭제 요청 - 실패(로그인을 안한 경우)")
     @Test
-    void givenCommentId_whenDeleteComment_thenReturns4xx() throws Exception {
+    void givenCommentIdWithoutUser_whenDeleteComment_thenReturns4xx() throws Exception {
+        // Given
+        Long commentId = 1L;
+
+        // When & Then
+        mvc.perform(delete("/v1/comments/{commentId}", commentId))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.code").value(400))
+                .andExpect(jsonPath("$.data").isEmpty())
+                .andExpect(jsonPath("$.message").value("로그인이 필요합니다."));
+    }
+
+    @DisplayName("댓글 삭제 요청 - 실패(댓글을 찾을 수 없을 때)")
+    @Test
+    void givenNotExistingCommentId_whenDeleteComment_thenReturns4xx() throws Exception {
         // Given
         Long commentId = 1L;
         CommentNotFoundException exception = new CommentNotFoundException();
@@ -133,7 +167,7 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andExpect(jsonPath("$.message").value(exception.getMessage()));
         then(commentService).should().deleteComment(any(), any());
+        then(globalExceptionRestAdvice).should().applicationException(eq(exception));
     }
-
 
 }

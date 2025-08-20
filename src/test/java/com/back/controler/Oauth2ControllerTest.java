@@ -21,6 +21,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayName("컨트롤러 - OAuth2")
 @Import({JsonDataEncoder.class})
-@UnsecuredWebMvcTest(controllers = Oauth2Controller.class)
+@WebMvcTest(controllers = Oauth2Controller.class)
 @AutoConfigureMockMvc(addFilters = false)
 class Oauth2ControllerTest {
 
@@ -49,7 +50,7 @@ class Oauth2ControllerTest {
         given(oauth2Service.authorizeRequest(oauth2ProviderType)).willReturn(responseEntity);
 
         // When & Then
-        mvc.perform(get("/oauth2/authorization/" + oauth2ProviderType.getRequest()))
+        mvc.perform(get("/oauth2/authorization/{providerType}", oauth2ProviderType.getRequest()))
                 .andExpect(status().isFound());
         then(oauth2Service).should().authorizeRequest(oauth2ProviderType);
     }
@@ -65,7 +66,7 @@ class Oauth2ControllerTest {
         );
 
         // When & Then
-        mvc.perform(get("/login/oauth2/code/" + oauth2ProviderType.getRequest())
+        mvc.perform(get("/login/oauth2/code/{providerType}", oauth2ProviderType.getRequest())
                         .param("code", code))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200))
@@ -86,7 +87,7 @@ class Oauth2ControllerTest {
         );
 
         // When & Then
-        mvc.perform(get("/login/oauth2/code/" + oauth2ProviderType.getRequest())
+        mvc.perform(get("/login/oauth2/code/{providerType}", oauth2ProviderType.getRequest())
                         .param("error", error))
                 .andExpect(status().is5xxServerError());
         then(oauth2Service).should().handleAuthorizationCallback(

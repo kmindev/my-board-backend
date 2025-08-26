@@ -6,7 +6,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 
 import com.back.common.config.TestJpaConfig;
 import com.back.article.domain.Article;
-import com.back.common.fixture.ArticleMockDataFactory;
+import com.back.common.fixture.ArticleFixture;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -167,7 +167,7 @@ class ArticleRepositoryTest {
     @Test
     void givenArticle_whenSave_thenReturnsSavedArticle() {
         // Given
-        Article article = ArticleMockDataFactory.createDBArticle();
+        Article article = ArticleFixture.createDBArticle();
 
         // When
         Article result = sut.save(article);

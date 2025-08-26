@@ -3,7 +3,7 @@ package com.back.common.fixture;
 import com.back.user.domain.UserAccount;
 import com.back.user.domain.UserRoleType;
 
-public class UserAccountMockDataFactory {
+public class UserAccountMockDataFixture {
 
     private static final String DEFAULT_USER_ID = "user1";
     private static final String DEFAULT_PASSWORD = "password1";
@@ -14,10 +14,10 @@ public class UserAccountMockDataFactory {
      * <p>
      * 기본값으로 구성된 {@link UserAccount} 객체를 생성합니다.
      * <ul>
-     *   <li>userId: {@link UserAccountMockDataFactory#DEFAULT_USER_ID}</li>
-     *   <li>password: {@link UserAccountMockDataFactory#DEFAULT_PASSWORD}</li>
-     *   <li>email: {@link UserAccountMockDataFactory#DEFAULT_EMAIL}</li>
-     *   <li>nickname: {@link UserAccountMockDataFactory#DEFAULT_NICKNAME}</li>
+     *   <li>userId: {@link UserAccountMockDataFixture#DEFAULT_USER_ID}</li>
+     *   <li>password: {@link UserAccountMockDataFixture#DEFAULT_PASSWORD}</li>
+     *   <li>email: {@link UserAccountMockDataFixture#DEFAULT_EMAIL}</li>
+     *   <li>nickname: {@link UserAccountMockDataFixture#DEFAULT_NICKNAME}</li>
      *   <li>role: {@link UserRoleType#USER}</li>
      * </ul>
      * </p>
@@ -40,9 +40,9 @@ public class UserAccountMockDataFactory {
      * 기본값으로 구성된 {@link UserAccount} 객체를 생성합니다.
      * <ul>
      *   <li>userId: {@param userId}</li>
-     *   <li>password: {@link UserAccountMockDataFactory#DEFAULT_PASSWORD}</li>
-     *   <li>email: {@link UserAccountMockDataFactory#DEFAULT_EMAIL}</li>
-     *   <li>nickname: {@link UserAccountMockDataFactory#DEFAULT_NICKNAME}</li>
+     *   <li>password: {@link UserAccountMockDataFixture#DEFAULT_PASSWORD}</li>
+     *   <li>email: {@link UserAccountMockDataFixture#DEFAULT_EMAIL}</li>
+     *   <li>nickname: {@link UserAccountMockDataFixture#DEFAULT_NICKNAME}</li>
      *   <li>role: {@link UserRoleType#USER}</li>
      * </ul>
      * </p>

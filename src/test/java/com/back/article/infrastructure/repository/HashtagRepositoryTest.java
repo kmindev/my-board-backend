@@ -6,7 +6,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 
 import com.back.common.config.TestJpaConfig;
 import com.back.article.domain.Hashtag;
-import com.back.common.fixture.HashtagMockDataFactory;
+import com.back.common.fixture.HashtagMockDataFixture;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +50,7 @@ class HashtagRepositoryTest {
         // Given
         Set<String> hashtagNames = Set.of("test1", "test2");
         Set<Hashtag> hashtags = hashtagNames.stream()
-                .map(HashtagMockDataFactory::createHashtagFromHashtagName)
+                .map(HashtagMockDataFixture::createHashtagFromHashtagName)
                 .collect(Collectors.toSet());
 
         // When

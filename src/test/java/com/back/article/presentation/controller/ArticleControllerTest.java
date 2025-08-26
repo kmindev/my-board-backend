@@ -1,10 +1,10 @@
 package com.back.article.presentation.controller;
 
 import static com.back.common.config.TestSecurityUtil.boardUserDetails;
-import static com.back.common.fixture.ArticleUpdateRequestFactory.createArticleUpdateRequest;
-import static com.back.common.fixture.NewArticleRequestFactory.createDefaultNewArticleRequest;
-import static com.back.common.fixture.ArticleWithCommentsWithHashtagsDtoFactory.createArticleWithCommentsWithHashtagsDto;
-import static com.back.common.fixture.ArticleWithHashtagsDtoFactory.createArticleWithHashtagsDto;
+import static com.back.common.fixture.ArticleUpdateRequestFixture.createArticleUpdateRequest;
+import static com.back.common.fixture.NewArticleRequestFixture.createDefaultNewArticleRequest;
+import static com.back.common.fixture.ArticleWithCommentsWithHashtagsDtoFixture.createArticleWithCommentsWithHashtagsDto;
+import static com.back.common.fixture.ArticleWithHashtagsDtoFixture.createArticleWithHashtagsDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;

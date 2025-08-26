@@ -1,8 +1,8 @@
 package com.back.comment.presentation.controller;
 
 import static com.back.common.config.TestSecurityUtil.boardUserDetails;
-import static com.back.common.fixture.NewCommentRequestFactory.createNewCommentRequest;
-import static com.back.common.fixture.ArticleWithCommentsWithHashtagsDtoFactory.createArticleWithCommentsWithHashtagsDto;
+import static com.back.common.fixture.NewCommentRequestFixture.createNewCommentRequest;
+import static com.back.common.fixture.ArticleWithCommentsWithHashtagsDtoFixture.createArticleWithCommentsWithHashtagsDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;

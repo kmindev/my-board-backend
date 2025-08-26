@@ -2,7 +2,7 @@ package com.back.common.fixture;
 
 import com.back.article.presentation.dto.request.ArticleUpdateRequest;
 
-public class ArticleUpdateRequestFactory {
+public class ArticleUpdateRequestFixture {
 
     private static final String DEFAULT_TITLE = "제목1";
     private static final String DEFAULT_CONTENT = "내용입니다.";
@@ -11,8 +11,8 @@ public class ArticleUpdateRequestFactory {
      * <p>
      * 기본값으로 구성된 {@link ArticleUpdateRequest} 객체를 생성합니다.
      * <ul>
-     *   <li>title: {@link ArticleUpdateRequestFactory#DEFAULT_TITLE}</li>
-     *   <li>content: {@link ArticleUpdateRequestFactory#DEFAULT_CONTENT}</li>
+     *   <li>title: {@link ArticleUpdateRequestFixture#DEFAULT_TITLE}</li>
+     *   <li>content: {@link ArticleUpdateRequestFixture#DEFAULT_CONTENT}</li>
      * </ul>
      * </p>
      *

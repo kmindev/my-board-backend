@@ -1,10 +1,10 @@
 package com.back.common.fixture;
 
-import static com.back.common.fixture.UserAccountDtoFactory.createUserAccountDto;
+import static com.back.common.fixture.UserAccountDtoFixture.createUserAccountDto;
 
 import com.back.article.application.dto.CommentDto;
 
-public class CommentDtoFactory {
+public class CommentDtoFixture {
 
     private static final Long DEFAULT_ID = 1L;
     private static final Long ARTICLE_ID = 1L;
@@ -14,10 +14,10 @@ public class CommentDtoFactory {
      * <p>
      * 기본값으로 구성된 {@link CommentDto} 객체를 생성합니다.
      * <ul>
-     *   <li>id: {@link CommentDtoFactory#DEFAULT_ID}</li>
-     *   <li>articleId: {@link CommentDtoFactory#ARTICLE_ID}</li>
-     *   <li>userAccountDto: {@link UserAccountDtoFactory#createUserAccountDto()}</li>
-     *   <li>content: {@link CommentDtoFactory#DEFAULT_CONTENT}</li>
+     *   <li>id: {@link CommentDtoFixture#DEFAULT_ID}</li>
+     *   <li>articleId: {@link CommentDtoFixture#ARTICLE_ID}</li>
+     *   <li>userAccountDto: {@link UserAccountDtoFixture#createUserAccountDto()}</li>
+     *   <li>content: {@link CommentDtoFixture#DEFAULT_CONTENT}</li>
      * </ul>
      * </p>
      *

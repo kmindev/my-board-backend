@@ -26,11 +26,11 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.back.common.fixture.ArticleMockDataFactory.*;
-import static com.back.common.fixture.HashtagMockDataFactory.createDBHashtagFromIdAndHashtagName;
-import static com.back.common.fixture.UserAccountMockDataFactory.createDBUserAccountFromUserId;
-import static com.back.common.fixture.ArticleUpdateDtoFactory.createArticleUpdateDto;
-import static com.back.common.fixture.NewArticleRequestDtoFactory.createNewArticleRequestDto;
+import static com.back.common.fixture.ArticleFixture.*;
+import static com.back.common.fixture.HashtagMockDataFixture.createDBHashtagFromIdAndHashtagName;
+import static com.back.common.fixture.UserAccountMockDataFixture.createDBUserAccountFromUserId;
+import static com.back.common.fixture.ArticleUpdateDtoFixture.createArticleUpdateDto;
+import static com.back.common.fixture.NewArticleRequestDtoFixture.createNewArticleRequestDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;

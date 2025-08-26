@@ -3,11 +3,11 @@ package com.back.common.fixture;
 import com.back.article.application.dto.ArticleWithCommentsWithHashtagsDto;
 import java.util.Set;
 
-import static com.back.common.fixture.CommentDtoFactory.createCommentDto;
-import static com.back.common.fixture.HashtagDtoFactory.createHashtagDto;
-import static com.back.common.fixture.UserAccountDtoFactory.createUserAccountDto;
+import static com.back.common.fixture.CommentDtoFixture.createCommentDto;
+import static com.back.common.fixture.HashtagDtoFixture.createHashtagDto;
+import static com.back.common.fixture.UserAccountDtoFixture.createUserAccountDto;
 
-public class ArticleWithCommentsWithHashtagsDtoFactory {
+public class ArticleWithCommentsWithHashtagsDtoFixture {
 
     private static final Long DEFAULT_ID = 1L;
     private static final String DEFAULT_TITLE = "제목";
@@ -17,12 +17,12 @@ public class ArticleWithCommentsWithHashtagsDtoFactory {
      * <p>
      * 기본값으로 구성된 {@link ArticleWithCommentsWithHashtagsDto} 객체를 생성합니다.
      * <ul>
-     *   <li>id: {@link ArticleWithCommentsWithHashtagsDtoFactory#DEFAULT_ID}</li>
-     *   <li>commentDtos: {@link CommentDtoFactory#createCommentDto()}</li>
-     *   <li>hashtagDtos: {@link HashtagDtoFactory#createHashtagDto()}</li>
-     *   <li>userAccountDto: {@link UserAccountDtoFactory#createUserAccountDto()}</li>
-     *   <li>title: {@link ArticleWithCommentsWithHashtagsDtoFactory#DEFAULT_TITLE}</li>
-     *   <li>content: {@link ArticleWithCommentsWithHashtagsDtoFactory#DEFAULT_CONTENT}</li>
+     *   <li>id: {@link ArticleWithCommentsWithHashtagsDtoFixture#DEFAULT_ID}</li>
+     *   <li>commentDtos: {@link CommentDtoFixture#createCommentDto()}</li>
+     *   <li>hashtagDtos: {@link HashtagDtoFixture#createHashtagDto()}</li>
+     *   <li>userAccountDto: {@link UserAccountDtoFixture#createUserAccountDto()}</li>
+     *   <li>title: {@link ArticleWithCommentsWithHashtagsDtoFixture#DEFAULT_TITLE}</li>
+     *   <li>content: {@link ArticleWithCommentsWithHashtagsDtoFixture#DEFAULT_CONTENT}</li>
      * </ul>
      * </p>
      *

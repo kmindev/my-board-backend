@@ -6,7 +6,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 
 import com.back.common.config.TestJpaConfig;
 import com.back.user.domain.UserAccount;
-import com.back.common.fixture.UserAccountMockDataFactory;
+import com.back.common.fixture.UserAccountMockDataFixture;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ class UserAccountRepositoryTest {
     void givenUser_whenSave_thenUserIsSaved() {
         // Given
         String userId = "test-user1";
-        UserAccount userAccount = UserAccountMockDataFactory.createDBUserAccountFromUserId(userId);
+        UserAccount userAccount = UserAccountMockDataFixture.createDBUserAccountFromUserId(userId);
 
         // When
         UserAccount result = sut.save(userAccount);

@@ -2,7 +2,7 @@ package com.back.common.fixture;
 
 import com.back.article.application.dto.NewArticleRequestDto;
 
-public class NewArticleRequestDtoFactory {
+public class NewArticleRequestDtoFixture {
 
     private static final String DEFAULT_TITLE = "제목";
     private static final String DEFAULT_CONTENT = "내용입니다.";
@@ -12,9 +12,9 @@ public class NewArticleRequestDtoFactory {
      * <p>
      * 기본값으로 구성된 {@link NewArticleRequestDto} 객체를 생성합니다.
      * <ul>
-     *   <li>title: {@link NewArticleRequestDtoFactory#DEFAULT_TITLE}</li>
-     *   <li>content: {@link NewArticleRequestDtoFactory#DEFAULT_CONTENT}</li>
-     *   <li>userId: {@link NewArticleRequestDtoFactory#DEFAULT_USER_ID}</li>
+     *   <li>title: {@link NewArticleRequestDtoFixture#DEFAULT_TITLE}</li>
+     *   <li>content: {@link NewArticleRequestDtoFixture#DEFAULT_CONTENT}</li>
+     *   <li>userId: {@link NewArticleRequestDtoFixture#DEFAULT_USER_ID}</li>
      * </ul>
      * </p>
      *

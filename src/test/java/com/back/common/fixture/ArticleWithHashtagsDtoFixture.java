@@ -3,10 +3,10 @@ package com.back.common.fixture;
 import com.back.article.application.dto.ArticleWithHashtagsDto;
 import java.util.Set;
 
-import static com.back.common.fixture.HashtagDtoFactory.createHashtagDto;
-import static com.back.common.fixture.UserAccountDtoFactory.createUserAccountDto;
+import static com.back.common.fixture.HashtagDtoFixture.createHashtagDto;
+import static com.back.common.fixture.UserAccountDtoFixture.createUserAccountDto;
 
-public class ArticleWithHashtagsDtoFactory {
+public class ArticleWithHashtagsDtoFixture {
 
     private static final Long DEFAULT_ID = 1L;
     private static final String DEFAULT_TITLE = "제목";
@@ -16,11 +16,11 @@ public class ArticleWithHashtagsDtoFactory {
      * <p>
      * 기본값으로 구성된 {@link ArticleWithHashtagsDto} 객체를 생성합니다.
      * <ul>
-     *   <li>id: {@link ArticleWithHashtagsDtoFactory#DEFAULT_ID}</li>
-     *   <li>title: {@link ArticleWithHashtagsDtoFactory#DEFAULT_TITLE}</li>
-     *   <li>content: {@link ArticleWithHashtagsDtoFactory#DEFAULT_CONTENT}</li>
-     *   <li>userAccountDto: {@link UserAccountDtoFactory#createUserAccountDto()}</li>
-     *   <li>hashtagDtos: {@link HashtagDtoFactory#createHashtagDto()} ()}</li>
+     *   <li>id: {@link ArticleWithHashtagsDtoFixture#DEFAULT_ID}</li>
+     *   <li>title: {@link ArticleWithHashtagsDtoFixture#DEFAULT_TITLE}</li>
+     *   <li>content: {@link ArticleWithHashtagsDtoFixture#DEFAULT_CONTENT}</li>
+     *   <li>userAccountDto: {@link UserAccountDtoFixture#createUserAccountDto()}</li>
+     *   <li>hashtagDtos: {@link HashtagDtoFixture#createHashtagDto()} ()}</li>
      * </ul>
      * </p>
      *

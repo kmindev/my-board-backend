@@ -3,7 +3,7 @@ package com.back.common.fixture;
 import com.back.article.domain.Hashtag;
 import org.springframework.test.util.ReflectionTestUtils;
 
-public class HashtagMockDataFactory {
+public class HashtagMockDataFixture {
 
     /**
      * <p>

@@ -13,8 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.back.common.fixture.HashtagMockDataFactory.createDBHashtagFromIdAndHashtagName;
-import static com.back.common.fixture.HashtagMockDataFactory.createHashtagFromHashtagName;
+import static com.back.common.fixture.HashtagMockDataFixture.createDBHashtagFromIdAndHashtagName;
+import static com.back.common.fixture.HashtagMockDataFixture.createHashtagFromHashtagName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.BDDMockito.given;

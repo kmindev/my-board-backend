@@ -3,7 +3,7 @@ package com.back.comment.application;
 import com.back.article.application.ArticleService;
 import com.back.article.domain.Article;
 import com.back.comment.domain.Comment;
-import com.back.common.fixture.CommentMockDataFactory;
+import com.back.common.fixture.CommentMockDataFixture;
 import com.back.user.application.UserAccountService;
 import com.back.user.domain.UserAccount;
 import com.back.article.domain.exception.ArticleNotFoundException;
@@ -20,10 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.back.common.fixture.ArticleMockDataFactory.createDBArticle;
-import static com.back.common.fixture.CommentMockDataFactory.createDBCommentFromCommentIdAndUserAccount;
-import static com.back.common.fixture.UserAccountMockDataFactory.createDBUserAccountFromUserId;
-import static com.back.common.fixture.NewCommentRequestDtoFactory.createNewCommentRequestDto;
+import static com.back.common.fixture.ArticleFixture.createDBArticle;
+import static com.back.common.fixture.CommentMockDataFixture.createDBCommentFromCommentIdAndUserAccount;
+import static com.back.common.fixture.UserAccountMockDataFixture.createDBUserAccountFromUserId;
+import static com.back.common.fixture.NewCommentRequestDtoFixture.createNewCommentRequestDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -51,7 +51,7 @@ public class CommentServiceTest {
         NewCommentRequestDto newCommentRequestDto = createNewCommentRequestDto();
         UserAccount userAccount = createDBUserAccountFromUserId(newCommentRequestDto.userId());
         Article findArticle = createDBArticle();
-        Comment comment = CommentMockDataFactory.createDBCommentFromArticleAndUserAccount(findArticle, userAccount);
+        Comment comment = CommentMockDataFixture.createDBCommentFromArticleAndUserAccount(findArticle, userAccount);
 
         given(articleService.findArticle(anyLong())).willReturn(findArticle);
         given(userAccountService.getUserAccount(newCommentRequestDto.userId())).willReturn(userAccount);

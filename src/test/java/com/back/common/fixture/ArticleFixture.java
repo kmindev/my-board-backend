@@ -4,10 +4,10 @@ import com.back.article.domain.Article;
 import com.back.user.domain.UserAccount;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static com.back.common.fixture.UserAccountMockDataFactory.createDBUserAccount;
+import static com.back.common.fixture.UserAccountMockDataFixture.createDBUserAccount;
 
 
-public class ArticleMockDataFactory {
+public class ArticleFixture {
 
     private static final Long DEFAULT_ID = 1L;
     private static final String DEFAULT_TITLE = "제목1";
@@ -17,10 +17,10 @@ public class ArticleMockDataFactory {
      * <p>
      * 기본값으로 구성된 {@link Article} 객체를 생성합니다.
      * <ul>
-     *   <li>id: {@link ArticleMockDataFactory#DEFAULT_ID}</li>
-     *   <li>title: {@link ArticleMockDataFactory#DEFAULT_TITLE}</li>
-     *   <li>content: {@link ArticleMockDataFactory#DEFAULT_CONTENT}</li>
-     *   <li>UserAccount: {@link UserAccountMockDataFactory#createDBUserAccount()}</li>
+     *   <li>id: {@link ArticleFixture#DEFAULT_ID}</li>
+     *   <li>title: {@link ArticleFixture#DEFAULT_TITLE}</li>
+     *   <li>content: {@link ArticleFixture#DEFAULT_CONTENT}</li>
+     *   <li>UserAccount: {@link UserAccountMockDataFixture#createDBUserAccount()}</li>
      * </ul>
      * </p>
      *
@@ -36,9 +36,9 @@ public class ArticleMockDataFactory {
      * <p>
      * 기본값으로 구성된 {@link Article} 객체를 생성합니다.
      * <ul>
-     *   <li>id: {@link ArticleMockDataFactory#DEFAULT_ID}</li>
-     *   <li>title: {@link ArticleMockDataFactory#DEFAULT_TITLE}</li>
-     *   <li>content: {@link ArticleMockDataFactory#DEFAULT_CONTENT}</li>
+     *   <li>id: {@link ArticleFixture#DEFAULT_ID}</li>
+     *   <li>title: {@link ArticleFixture#DEFAULT_TITLE}</li>
+     *   <li>content: {@link ArticleFixture#DEFAULT_CONTENT}</li>
      *   <li>UserAccount: {@param userAccount}</li>
      * </ul>
      * </p>
@@ -56,8 +56,8 @@ public class ArticleMockDataFactory {
      * 기본값으로 구성된 {@link Article} 객체를 생성합니다.
      * <ul>
      *   <li>id: {@param articleId}</li>
-     *   <li>title: {@link ArticleMockDataFactory#DEFAULT_TITLE}</li>
-     *   <li>content: {@link ArticleMockDataFactory#DEFAULT_CONTENT}</li>
+     *   <li>title: {@link ArticleFixture#DEFAULT_TITLE}</li>
+     *   <li>content: {@link ArticleFixture#DEFAULT_CONTENT}</li>
      *   <li>UserAccount: {@param userAccount}</li>
      * </ul>
      * </p>
@@ -75,9 +75,9 @@ public class ArticleMockDataFactory {
      * 기본값으로 구성된 {@link Article} 객체를 생성합니다.
      * <ul>
      *   <li>id: {@param articleId}</li>
-     *   <li>title: {@link ArticleMockDataFactory#DEFAULT_TITLE}</li>
-     *   <li>content: {@link ArticleMockDataFactory#DEFAULT_CONTENT}</li>
-     *   <li>UserAccount: {@link UserAccountMockDataFactory#createDBUserAccount()}</li>
+     *   <li>title: {@link ArticleFixture#DEFAULT_TITLE}</li>
+     *   <li>content: {@link ArticleFixture#DEFAULT_CONTENT}</li>
+     *   <li>UserAccount: {@link UserAccountMockDataFixture#createDBUserAccount()}</li>
      * </ul>
      * </p>
      *

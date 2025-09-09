@@ -1,0 +1,15 @@
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = false
+}
+
+dependencies {
+
+    implementation project(':board-core:domain')
+    implementation project(':board-core:infra')
+    implementation project(':global-utils')
+
+}

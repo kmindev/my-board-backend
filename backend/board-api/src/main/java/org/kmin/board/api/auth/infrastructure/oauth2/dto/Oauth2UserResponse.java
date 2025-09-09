@@ -1,8 +1,8 @@
 package org.kmin.board.api.auth.infrastructure.oauth2.dto;
 
 import org.kmin.board.api.auth.domain.Oauth2ProviderType;
-import org.kmin.board.api.user.domain.UserAccount;
-import org.kmin.board.api.user.domain.UserRoleType;
+import org.kmin.board.domain.user.UserAccount;
+import org.kmin.board.domain.user.UserRoleType;
 import java.util.UUID;
 
 public record Oauth2UserResponse(

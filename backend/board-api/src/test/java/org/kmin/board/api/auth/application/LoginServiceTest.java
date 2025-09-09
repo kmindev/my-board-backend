@@ -7,7 +7,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 
-import org.kmin.board.api.user.domain.UserRoleType;
+import org.kmin.board.domain.user.UserRoleType;
 import org.kmin.board.api.auth.domain.BoardUserDetails;
 import org.kmin.board.api.user.application.dto.UserAccountDto;
 import jakarta.servlet.http.HttpServletRequest;

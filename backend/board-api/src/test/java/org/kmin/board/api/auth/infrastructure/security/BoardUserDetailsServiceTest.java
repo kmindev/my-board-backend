@@ -1,8 +1,8 @@
 package org.kmin.board.api.auth.infrastructure.security;
 
 import org.kmin.board.api.auth.domain.BoardUserDetails;
-import org.kmin.board.api.user.domain.UserAccount;
-import org.kmin.board.api.user.infrastructure.repository.UserAccountRepository;
+import org.kmin.board.domain.user.UserAccount;
+import org.kmin.board.domain.user.repository.UserAccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

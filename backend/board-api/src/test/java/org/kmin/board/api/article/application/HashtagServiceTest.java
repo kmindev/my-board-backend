@@ -1,7 +1,7 @@
 package org.kmin.board.api.article.application;
 
-import org.kmin.board.api.article.domain.Hashtag;
-import org.kmin.board.api.article.infrastructure.repository.HashtagRepository;
+import org.kmin.board.domain.article.Hashtag;
+import org.kmin.board.domain.article.repository.HashtagRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,6 @@
 package org.kmin.board.api.article.presentation.dto.response;
 
-import org.kmin.board.api.article.domain.SearchType;
+import org.kmin.board.api.article.SearchType;
 import org.kmin.board.api.article.application.dto.ArticleWithHashtagsDto;
 import org.kmin.board.api.article.application.dto.HashtagDto;
 

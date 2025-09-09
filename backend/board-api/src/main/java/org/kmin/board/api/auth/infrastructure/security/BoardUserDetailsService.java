@@ -1,6 +1,6 @@
 package org.kmin.board.api.auth.infrastructure.security;
 
-import org.kmin.board.api.user.infrastructure.repository.UserAccountRepository;
+import org.kmin.board.domain.user.repository.UserAccountRepository;
 import org.kmin.board.api.auth.domain.BoardUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

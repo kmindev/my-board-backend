@@ -1,14 +1,14 @@
 package org.kmin.board.api.article.application;
 
-import org.kmin.board.api.article.domain.Article;
-import org.kmin.board.api.article.domain.Hashtag;
+import org.kmin.board.domain.article.Article;
+import org.kmin.board.domain.article.Hashtag;
 import org.kmin.board.api.user.application.UserAccountService;
-import org.kmin.board.api.user.domain.UserAccount;
-import org.kmin.board.api.article.domain.SearchType;
-import org.kmin.board.api.article.domain.exception.ArticleNotFoundException;
-import org.kmin.board.api.article.domain.exception.UnexpectedSearchTypeException;
-import org.kmin.board.api.user.domain.exception.UserMismatchException;
-import org.kmin.board.api.article.infrastructure.repository.ArticleRepository;
+import org.kmin.board.domain.user.UserAccount;
+import org.kmin.board.api.article.SearchType;
+import org.kmin.board.api.article.exception.ArticleNotFoundException;
+import org.kmin.board.api.article.exception.UnexpectedSearchTypeException;
+import org.kmin.board.api.user.exception.UserMismatchException;
+import org.kmin.board.domain.article.repository.ArticleRepository;
 import org.kmin.board.api.article.application.dto.ArticleUpdateDto;
 import org.kmin.board.api.article.application.dto.ArticleWithCommentsWithHashtagsDto;
 import org.kmin.board.api.article.application.dto.ArticleWithHashtagsDto;

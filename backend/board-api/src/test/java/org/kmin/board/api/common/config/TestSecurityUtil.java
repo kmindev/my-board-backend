@@ -2,7 +2,7 @@ package org.kmin.board.api.common.config;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 
-import org.kmin.board.api.user.domain.UserRoleType;
+import org.kmin.board.domain.user.UserRoleType;
 import org.kmin.board.api.auth.domain.BoardUserDetails;
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package org.kmin.board.api.common.fixture;
 
-import org.kmin.board.api.article.domain.Article;
-import org.kmin.board.api.comment.domain.Comment;
-import org.kmin.board.api.user.domain.UserAccount;
+import org.kmin.board.domain.article.Article;
+import org.kmin.board.domain.comment.Comment;
+import org.kmin.board.domain.user.UserAccount;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.kmin.board.api.common.fixture.ArticleFixture.createDBArticle;

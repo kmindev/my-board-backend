@@ -1,6 +1,6 @@
 package org.kmin.board.api.article.application.dto;
 
-import org.kmin.board.api.comment.domain.Comment;
+import org.kmin.board.domain.comment.Comment;
 
 import org.kmin.board.api.user.application.dto.UserAccountDto;
 import java.time.LocalDateTime;

@@ -1,9 +1,9 @@
 package org.kmin.board.api.user.application;
 
-import org.kmin.board.api.user.domain.UserAccount;
-import org.kmin.board.api.user.domain.UserRoleType;
-import org.kmin.board.api.user.domain.exception.UserNotFoundException;
-import org.kmin.board.api.user.infrastructure.repository.UserAccountRepository;
+import org.kmin.board.domain.user.UserAccount;
+import org.kmin.board.domain.user.UserRoleType;
+import org.kmin.board.api.user.exception.UserNotFoundException;
+import org.kmin.board.domain.user.repository.UserAccountRepository;
 import org.kmin.board.api.auth.infrastructure.oauth2.dto.Oauth2UserResponse;
 import org.kmin.board.api.user.application.dto.UserAccountDto;
 import lombok.RequiredArgsConstructor;

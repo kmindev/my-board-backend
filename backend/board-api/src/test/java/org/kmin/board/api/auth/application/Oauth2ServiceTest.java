@@ -7,7 +7,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 
 import org.kmin.board.api.user.application.UserAccountService;
-import org.kmin.board.api.user.domain.UserRoleType;
+import org.kmin.board.domain.user.UserRoleType;
 import org.kmin.board.api.common.exception.ApplicationException;
 import org.kmin.board.api.auth.domain.exception.AuthorizationRequestRejectedException;
 import org.kmin.board.api.auth.domain.exception.Oauth2ProviderNotProvideException;

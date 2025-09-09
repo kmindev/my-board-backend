@@ -7,7 +7,7 @@ import static org.kmin.board.api.auth.infrastructure.security.SecurityUrlManager
 import static org.kmin.board.api.auth.infrastructure.security.SecurityUrlManager.SWAGGER_URLS;
 import static org.springframework.http.HttpMethod.GET;
 
-import org.kmin.board.api.user.domain.UserRoleType;
+import org.kmin.board.domain.user.UserRoleType;
 import org.kmin.board.api.auth.infrastructure.security.ApiAuthenticationFilter;
 import org.kmin.board.api.auth.infrastructure.security.ApiAccessDeniedHandler;
 import org.kmin.board.api.auth.infrastructure.security.ApiAuthenticationFailureHandler;

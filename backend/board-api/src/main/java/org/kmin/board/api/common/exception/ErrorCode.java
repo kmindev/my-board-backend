@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.exception;
 
-import org.kmin.board.api.article.domain.SearchType;
+import org.kmin.board.api.article.SearchType;
 import java.util.Arrays;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

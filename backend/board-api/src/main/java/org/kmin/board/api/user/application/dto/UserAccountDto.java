@@ -1,7 +1,7 @@
 package org.kmin.board.api.user.application.dto;
 
-import org.kmin.board.api.user.domain.UserAccount;
-import org.kmin.board.api.user.domain.UserRoleType;
+import org.kmin.board.domain.user.UserAccount;
+import org.kmin.board.domain.user.UserRoleType;
 
 import java.time.LocalDateTime;
 

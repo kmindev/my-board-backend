@@ -1,7 +1,7 @@
 package org.kmin.board.api.article.application.dto;
 
-import org.kmin.board.api.article.domain.Article;
-import org.kmin.board.api.article.domain.ArticleHashtag;
+import org.kmin.board.domain.article.Article;
+import org.kmin.board.domain.article.ArticleHashtag;
 
 import org.kmin.board.api.user.application.dto.UserAccountDto;
 import java.time.LocalDateTime;

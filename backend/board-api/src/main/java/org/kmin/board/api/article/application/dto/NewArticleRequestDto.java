@@ -1,7 +1,7 @@
 package org.kmin.board.api.article.application.dto;
 
-import org.kmin.board.api.article.domain.Article;
-import org.kmin.board.api.user.domain.UserAccount;
+import org.kmin.board.domain.article.Article;
+import org.kmin.board.domain.user.UserAccount;
 
 public record NewArticleRequestDto(
         String title, // 제목

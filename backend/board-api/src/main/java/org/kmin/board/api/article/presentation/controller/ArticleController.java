@@ -7,7 +7,7 @@ import org.kmin.board.api.article.presentation.dto.response.ArticleWithHashtagsR
 import org.kmin.board.api.article.presentation.dto.response.SearchArticleResponse;
 import org.kmin.board.api.article.presentation.dto.request.ArticleUpdateRequest;
 import org.kmin.board.api.article.presentation.dto.request.NewArticleRequest;
-import org.kmin.board.api.article.domain.SearchType;
+import org.kmin.board.api.article.SearchType;
 import org.kmin.board.api.auth.domain.BoardUserDetails;
 import org.kmin.board.api.article.application.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;

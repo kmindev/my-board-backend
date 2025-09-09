@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.fixture;
 
-import org.kmin.board.api.article.domain.Hashtag;
+import org.kmin.board.domain.article.Hashtag;
 import org.springframework.test.util.ReflectionTestUtils;
 
 public class HashtagMockDataFixture {

@@ -5,12 +5,13 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
 import org.kmin.board.api.common.config.TestJpaConfig;
-import org.kmin.board.api.article.domain.Hashtag;
+import org.kmin.board.domain.article.Hashtag;
 import org.kmin.board.api.common.fixture.HashtagMockDataFixture;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.kmin.board.domain.article.repository.HashtagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;

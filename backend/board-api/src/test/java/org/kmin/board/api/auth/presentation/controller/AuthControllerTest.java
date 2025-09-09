@@ -13,7 +13,7 @@ import org.kmin.board.api.common.config.JsonDataEncoder;
 import org.kmin.board.api.common.config.SecurityConfig;
 import org.kmin.board.api.common.fixture.BoardUserDetailsFixture;
 import org.kmin.board.api.auth.presentation.dto.request.LoginRequest;
-import org.kmin.board.api.user.domain.UserRoleType;
+import org.kmin.board.domain.user.UserRoleType;
 import org.kmin.board.api.auth.domain.BoardUserDetails;
 import org.kmin.board.api.auth.infrastructure.security.ApiAuthenticationProvider;
 import org.kmin.board.api.auth.infrastructure.security.ApiAuthenticationToken;

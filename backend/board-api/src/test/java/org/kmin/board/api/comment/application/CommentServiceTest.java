@@ -1,14 +1,14 @@
 package org.kmin.board.api.comment.application;
 
 import org.kmin.board.api.article.application.ArticleService;
-import org.kmin.board.api.article.domain.Article;
-import org.kmin.board.api.comment.domain.Comment;
+import org.kmin.board.domain.article.Article;
+import org.kmin.board.domain.comment.Comment;
 import org.kmin.board.api.common.fixture.CommentMockDataFixture;
 import org.kmin.board.api.user.application.UserAccountService;
-import org.kmin.board.api.user.domain.UserAccount;
-import org.kmin.board.api.article.domain.exception.ArticleNotFoundException;
-import org.kmin.board.api.user.domain.exception.UserMismatchException;
-import org.kmin.board.api.comment.infrastructure.repository.CommentRepository;
+import org.kmin.board.domain.user.UserAccount;
+import org.kmin.board.api.article.exception.ArticleNotFoundException;
+import org.kmin.board.api.user.exception.UserMismatchException;
+import org.kmin.board.domain.comment.repository.CommentRepository;
 import org.kmin.board.api.article.application.dto.ArticleWithCommentsWithHashtagsDto;
 import org.kmin.board.api.comment.application.dto.NewCommentRequestDto;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,7 @@
 package org.kmin.board.api.common.fixture;
 
 import org.kmin.board.api.auth.domain.BoardUserDetails;
-import org.kmin.board.api.user.domain.UserRoleType;
+import org.kmin.board.domain.user.UserRoleType;
 import java.util.List;
 import java.util.Map;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

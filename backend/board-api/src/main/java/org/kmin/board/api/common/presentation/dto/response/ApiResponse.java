@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.presentation.dto.response;
 
-import org.kmin.global_utils.exception.ErrorCode;
+import org.kmin.board.api.common.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 public record ApiResponse<T>(

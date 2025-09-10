@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.fixture;
 
-import org.kmin.board.api.article.application.dto.HashtagDto;
+import org.kmin.board.api.apps.article.application.dto.HashtagDto;
 
 public class HashtagDtoFixture {
 

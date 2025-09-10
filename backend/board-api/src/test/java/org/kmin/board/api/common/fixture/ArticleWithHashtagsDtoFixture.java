@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.fixture;
 
-import org.kmin.board.api.article.application.dto.ArticleWithHashtagsDto;
+import org.kmin.board.api.apps.article.application.dto.ArticleWithHashtagsDto;
 import java.util.Set;
 
 import static org.kmin.board.api.common.fixture.HashtagDtoFixture.createHashtagDto;

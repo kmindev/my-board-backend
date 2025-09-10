@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.fixture;
 
-import org.kmin.board.api.comment.presentation.dto.request.NewCommentRequest;
+import org.kmin.board.api.apps.comment.presentation.dto.request.NewCommentRequest;
 
 public class NewCommentRequestFixture {
 

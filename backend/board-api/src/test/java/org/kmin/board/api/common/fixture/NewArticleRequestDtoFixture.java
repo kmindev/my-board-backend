@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.fixture;
 
-import org.kmin.board.api.article.application.dto.NewArticleRequestDto;
+import org.kmin.board.api.apps.article.application.dto.NewArticleRequestDto;
 
 public class NewArticleRequestDtoFixture {
 

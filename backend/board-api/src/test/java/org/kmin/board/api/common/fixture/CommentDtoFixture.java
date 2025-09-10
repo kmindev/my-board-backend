@@ -2,7 +2,7 @@ package org.kmin.board.api.common.fixture;
 
 import static org.kmin.board.api.common.fixture.UserAccountDtoFixture.createUserAccountDto;
 
-import org.kmin.board.api.article.application.dto.CommentDto;
+import org.kmin.board.api.apps.article.application.dto.CommentDto;
 
 public class CommentDtoFixture {
 

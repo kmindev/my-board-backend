@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.fixture;
 
-import org.kmin.board.api.auth.domain.BoardUserDetails;
+import org.kmin.board.api.apps.auth.basic.domain.BoardUserDetails;
 import org.kmin.board.domain.user.UserRoleType;
 import java.util.List;
 import java.util.Map;

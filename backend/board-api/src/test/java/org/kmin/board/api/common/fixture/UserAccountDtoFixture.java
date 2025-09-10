@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.fixture;
 
-import org.kmin.board.api.user.application.dto.UserAccountDto;
+import org.kmin.board.api.apps.user.application.dto.UserAccountDto;
 import org.kmin.board.domain.user.UserRoleType;
 
 public class UserAccountDtoFixture {

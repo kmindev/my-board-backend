@@ -1,6 +1,6 @@
 package org.kmin.board.api.common.config;
 
-import org.kmin.board.api.auth.domain.BoardUserDetails;
+import org.kmin.board.api.apps.auth.basic.domain.BoardUserDetails;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -3,7 +3,6 @@ package org.kmin.board.api.common.exception;
 import org.kmin.board.api.common.presentation.dto.response.ApiResponse;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import lombok.extern.slf4j.Slf4j;
-import org.kmin.global_utils.exception.ApplicationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

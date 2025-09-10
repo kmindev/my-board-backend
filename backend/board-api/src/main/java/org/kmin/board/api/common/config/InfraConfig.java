@@ -1,4 +1,4 @@
-package org.kmin.board.api.config;
+package org.kmin.board.api.common.config;
 
 import org.kmin.board.infra.EnableMyBoardConfig;
 import org.kmin.board.infra.MyBoardConfigGroup;

@@ -1,6 +1,6 @@
 package org.kmin.board.api.user.application;
 
-import static org.kmin.board.api.common.fixture.UserAccountMockDataFixture.createDBUserAccountFromUserId;
+import static org.kmin.board.api.common.fixture.UserAccountFixture.createDBUserAccountFromUserId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;

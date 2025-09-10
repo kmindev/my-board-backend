@@ -3,7 +3,7 @@ package org.kmin.board.api.common.fixture;
 import org.kmin.board.domain.user.UserAccount;
 import org.kmin.board.domain.user.UserRoleType;
 
-public class UserAccountMockDataFixture {
+public class UserAccountFixture {
 
     private static final String DEFAULT_USER_ID = "user1";
     private static final String DEFAULT_PASSWORD = "password1";
@@ -14,10 +14,10 @@ public class UserAccountMockDataFixture {
      * <p>
      * 기본값으로 구성된 {@link UserAccount} 객체를 생성합니다.
      * <ul>
-     *   <li>userId: {@link UserAccountMockDataFixture#DEFAULT_USER_ID}</li>
-     *   <li>password: {@link UserAccountMockDataFixture#DEFAULT_PASSWORD}</li>
-     *   <li>email: {@link UserAccountMockDataFixture#DEFAULT_EMAIL}</li>
-     *   <li>nickname: {@link UserAccountMockDataFixture#DEFAULT_NICKNAME}</li>
+     *   <li>userId: {@link UserAccountFixture#DEFAULT_USER_ID}</li>
+     *   <li>password: {@link UserAccountFixture#DEFAULT_PASSWORD}</li>
+     *   <li>email: {@link UserAccountFixture#DEFAULT_EMAIL}</li>
+     *   <li>nickname: {@link UserAccountFixture#DEFAULT_NICKNAME}</li>
      *   <li>role: {@link UserRoleType#USER}</li>
      * </ul>
      * </p>
@@ -40,9 +40,9 @@ public class UserAccountMockDataFixture {
      * 기본값으로 구성된 {@link UserAccount} 객체를 생성합니다.
      * <ul>
      *   <li>userId: {@param userId}</li>
-     *   <li>password: {@link UserAccountMockDataFixture#DEFAULT_PASSWORD}</li>
-     *   <li>email: {@link UserAccountMockDataFixture#DEFAULT_EMAIL}</li>
-     *   <li>nickname: {@link UserAccountMockDataFixture#DEFAULT_NICKNAME}</li>
+     *   <li>password: {@link UserAccountFixture#DEFAULT_PASSWORD}</li>
+     *   <li>email: {@link UserAccountFixture#DEFAULT_EMAIL}</li>
+     *   <li>nickname: {@link UserAccountFixture#DEFAULT_NICKNAME}</li>
      *   <li>role: {@link UserRoleType#USER}</li>
      * </ul>
      * </p>

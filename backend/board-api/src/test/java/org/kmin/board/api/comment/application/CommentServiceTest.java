@@ -1,9 +1,9 @@
 package org.kmin.board.api.comment.application;
 
 import org.kmin.board.api.article.application.ArticleService;
+import org.kmin.board.api.common.fixture.CommentFixture;
 import org.kmin.board.domain.article.Article;
 import org.kmin.board.domain.comment.Comment;
-import org.kmin.board.api.common.fixture.CommentMockDataFixture;
 import org.kmin.board.api.user.application.UserAccountService;
 import org.kmin.board.domain.user.UserAccount;
 import org.kmin.board.api.article.exception.ArticleNotFoundException;

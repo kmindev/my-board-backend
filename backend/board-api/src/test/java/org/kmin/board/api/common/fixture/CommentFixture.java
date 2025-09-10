@@ -7,7 +7,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.kmin.board.api.common.fixture.ArticleFixture.createDBArticle;
 
-public class CommentMockDataFixture {
+public class CommentFixture {
 
     private static final Long DEFAULT_ID = 1L;
     private static final String DEFAULT_CONTENT = "댓글입니다.";
@@ -16,8 +16,8 @@ public class CommentMockDataFixture {
      * <p>
      * 기본값으로 구성된 {@link Comment} 객체를 생성합니다.
      * <ul>
-     *   <li>id: {@link CommentMockDataFixture#DEFAULT_ID}</li>
-     *   <li>content: {@link CommentMockDataFixture#DEFAULT_CONTENT}</li>
+     *   <li>id: {@link CommentFixture#DEFAULT_ID}</li>
+     *   <li>content: {@link CommentFixture#DEFAULT_CONTENT}</li>
      *   <li>article: {@param article}</li>
      *   <li>userAccount: {@param userAccount}</li>
      * </ul>
@@ -36,7 +36,7 @@ public class CommentMockDataFixture {
      * 기본값으로 구성된 {@link Comment} 객체를 생성합니다.
      * <ul>
      *   <li>id: {@param commentId}</li>
-     *   <li>content: {@link CommentMockDataFixture#DEFAULT_CONTENT}</li>
+     *   <li>content: {@link CommentFixture#DEFAULT_CONTENT}</li>
      *   <li>article: {@link ArticleFixture#createDBArticle()}</li>
      *   <li>userAccount: {@param userAccount}</li>
      * </ul>

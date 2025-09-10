@@ -13,8 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.kmin.board.api.common.fixture.HashtagMockDataFixture.createDBHashtagFromIdAndHashtagName;
-import static org.kmin.board.api.common.fixture.HashtagMockDataFixture.createHashtagFromHashtagName;
+import static org.kmin.board.api.common.fixture.HashtagFixture.createDBHashtagFromIdAndHashtagName;
+import static org.kmin.board.api.common.fixture.HashtagFixture.createHashtagFromHashtagName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.BDDMockito.given;

@@ -4,7 +4,7 @@ import org.kmin.board.domain.article.Article;
 import org.kmin.board.domain.user.UserAccount;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.kmin.board.api.common.fixture.UserAccountMockDataFixture.createDBUserAccount;
+import static org.kmin.board.api.common.fixture.UserAccountFixture.createDBUserAccount;
 
 
 public class ArticleFixture {
@@ -20,7 +20,7 @@ public class ArticleFixture {
      *   <li>id: {@link ArticleFixture#DEFAULT_ID}</li>
      *   <li>title: {@link ArticleFixture#DEFAULT_TITLE}</li>
      *   <li>content: {@link ArticleFixture#DEFAULT_CONTENT}</li>
-     *   <li>UserAccount: {@link UserAccountMockDataFixture#createDBUserAccount()}</li>
+     *   <li>UserAccount: {@link UserAccountFixture#createDBUserAccount()}</li>
      * </ul>
      * </p>
      *
@@ -77,7 +77,7 @@ public class ArticleFixture {
      *   <li>id: {@param articleId}</li>
      *   <li>title: {@link ArticleFixture#DEFAULT_TITLE}</li>
      *   <li>content: {@link ArticleFixture#DEFAULT_CONTENT}</li>
-     *   <li>UserAccount: {@link UserAccountMockDataFixture#createDBUserAccount()}</li>
+     *   <li>UserAccount: {@link UserAccountFixture#createDBUserAccount()}</li>
      * </ul>
      * </p>
      *

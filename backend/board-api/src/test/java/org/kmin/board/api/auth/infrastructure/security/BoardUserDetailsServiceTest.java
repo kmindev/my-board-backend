@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
-import static org.kmin.board.api.common.fixture.UserAccountMockDataFixture.createDBUserAccount;
+import static org.kmin.board.api.common.fixture.UserAccountFixture.createDBUserAccount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;

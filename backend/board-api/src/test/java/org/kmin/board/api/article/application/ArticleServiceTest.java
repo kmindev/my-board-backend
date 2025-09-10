@@ -27,8 +27,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.kmin.board.api.common.fixture.ArticleFixture.*;
-import static org.kmin.board.api.common.fixture.HashtagMockDataFixture.createDBHashtagFromIdAndHashtagName;
-import static org.kmin.board.api.common.fixture.UserAccountMockDataFixture.createDBUserAccountFromUserId;
+import static org.kmin.board.api.common.fixture.HashtagFixture.createDBHashtagFromIdAndHashtagName;
+import static org.kmin.board.api.common.fixture.UserAccountFixture.createDBUserAccountFromUserId;
 import static org.kmin.board.api.common.fixture.ArticleUpdateDtoFixture.createArticleUpdateDto;
 import static org.kmin.board.api.common.fixture.NewArticleRequestDtoFixture.createNewArticleRequestDto;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,17 +1,17 @@
-package org.kmin.board.api.article.infrastructure.repository;
+package org.kmin.board.domain.article.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_CLASS;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
-import org.kmin.board.api.common.config.TestJpaConfig;
-import org.kmin.board.domain.article.Article;
-import org.kmin.board.api.common.fixture.ArticleFixture;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.kmin.board.domain.article.repository.ArticleRepository;
+import org.kmin.board.domain.article.Article;
+import org.kmin.board.domain.config.TestJpaAuditingConfig;
+import org.kmin.board.domain.config.TestJpaConfig;
+import org.kmin.board.domain.fixture.ArticleFixture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
@@ -23,7 +23,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 @DisplayName("Repository - 게시글")
 @Sql(scripts = "/sql/data.sql", executionPhase = BEFORE_TEST_CLASS)
-@Import(TestJpaConfig.class)
+@Import({TestJpaAuditingConfig.class, TestJpaConfig.class})
 @DirtiesContext(classMode = BEFORE_CLASS)
 @DataJpaTest
 class ArticleRepositoryTest {
@@ -87,8 +87,8 @@ class ArticleRepositoryTest {
         assertThat(result).isNotNull();
         assertThat(result.getTotalElements()).isEqualTo(3);
         assertThat(result.getContent())
-                .extracting(Article::getTitle)
-                .allMatch(title -> title.contains(searchValue));
+            .extracting(Article::getTitle)
+            .allMatch(title -> title.contains(searchValue));
     }
 
     @DisplayName("검색어와 페이징 정보를 전달하면, 본문에 검색어가 포함된 게시글을 페이지 단위로 조회할 수 있다")
@@ -105,8 +105,8 @@ class ArticleRepositoryTest {
         assertThat(result).isNotNull();
         assertThat(result.getTotalElements()).isEqualTo(3);
         assertThat(result.getContent())
-                .extracting(Article::getContent)
-                .allMatch(content -> content.contains(searchValue));
+            .extracting(Article::getContent)
+            .allMatch(content -> content.contains(searchValue));
     }
 
     @DisplayName("게시글 작성자 ID와 페이징 정보를 전달하면, 작성자 ID 해당되는 게시글을 페이지 단위로 조회할 수 있다")
@@ -123,8 +123,8 @@ class ArticleRepositoryTest {
         assertThat(result).isNotNull();
         assertThat(result.getTotalElements()).isEqualTo(2);
         assertThat(result.getContent())
-                .extracting(article -> article.getUserAccount().getUserId())
-                .allMatch(userId -> userId.contains(searchValue));
+            .extracting(article -> article.getUserAccount().getUserId())
+            .allMatch(userId -> userId.contains(searchValue));
     }
 
     @DisplayName("게시글 작성자 닉네임과 페이징 정보를 전달하면, 작성자 닉네임에 해당되는 게시글을 페이지 단위로 조회할 수 있다")
@@ -141,8 +141,8 @@ class ArticleRepositoryTest {
         assertThat(result).isNotNull();
         assertThat(result.getTotalElements()).isEqualTo(2);
         assertThat(result.getContent())
-                .extracting(article -> article.getUserAccount().getNickname())
-                .allMatch(nickname -> nickname.contains(searchValue));
+            .extracting(article -> article.getUserAccount().getNickname())
+            .allMatch(nickname -> nickname.contains(searchValue));
     }
 
     @DisplayName("해시태그명들과 페이징 정보를 전달하면, 해시태그명에 해당되는 게시글을 페이지 단위로 조회할 수 있다")
@@ -159,9 +159,9 @@ class ArticleRepositoryTest {
         assertThat(result).isNotNull();
         assertThat(result.getTotalElements()).isEqualTo(1);
         assertThat(result.getContent())
-                .flatExtracting(Article::getArticleHashtags)
-                .extracting(articleHashtag -> articleHashtag.getHashtag().getHashtagName())
-                .anyMatch(hashtags::contains);
+            .flatExtracting(Article::getArticleHashtags)
+            .extracting(articleHashtag -> articleHashtag.getHashtag().getHashtagName())
+            .anyMatch(hashtags::contains);
     }
 
     @DisplayName("게시글을 전달하면, DB에 저장한다")

@@ -1,17 +1,17 @@
-package org.kmin.board.api.article.infrastructure.repository;
+package org.kmin.board.domain.article.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_CLASS;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
-import org.kmin.board.api.common.config.TestJpaConfig;
-import org.kmin.board.domain.article.Hashtag;
-import org.kmin.board.api.common.fixture.HashtagMockDataFixture;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.kmin.board.domain.article.repository.HashtagRepository;
+import org.kmin.board.domain.article.Hashtag;
+import org.kmin.board.domain.config.TestJpaAuditingConfig;
+import org.kmin.board.domain.config.TestJpaConfig;
+import org.kmin.board.domain.fixture.HashtagFixture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
@@ -20,7 +20,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 @DisplayName("Repository - 해시태그")
 @Sql(scripts = "/sql/data.sql", executionPhase = BEFORE_TEST_CLASS)
-@Import(TestJpaConfig.class)
+@Import({TestJpaAuditingConfig.class, TestJpaConfig.class})
 @DirtiesContext(classMode = BEFORE_CLASS)
 @DataJpaTest
 class HashtagRepositoryTest {
@@ -41,8 +41,8 @@ class HashtagRepositoryTest {
         assertThat(result).isNotEmpty();
         assertThat(result).hasSize(2);
         assertThat(result)
-                .extracting(Hashtag::getHashtagName)
-                .anyMatch(hashtagNames::contains);
+            .extracting(Hashtag::getHashtagName)
+            .anyMatch(hashtagNames::contains);
     }
 
     @DisplayName("N개의 해시태그엔티티를 전달하면, DB에 저장된다.")
@@ -51,8 +51,8 @@ class HashtagRepositoryTest {
         // Given
         Set<String> hashtagNames = Set.of("test1", "test2");
         Set<Hashtag> hashtags = hashtagNames.stream()
-                .map(HashtagMockDataFixture::createHashtagFromHashtagName)
-                .collect(Collectors.toSet());
+            .map(HashtagFixture::createHashtagFromHashtagName)
+            .collect(Collectors.toSet());
 
         // When
         sut.saveAll(hashtags);
@@ -62,8 +62,8 @@ class HashtagRepositoryTest {
         assertThat(savedHashtags).isNotEmpty();
         assertThat(savedHashtags).hasSize(2);
         assertThat(savedHashtags)
-                .extracting(Hashtag::getHashtagName)
-                .anyMatch(hashtagNames::contains);
+            .extracting(Hashtag::getHashtagName)
+            .anyMatch(hashtagNames::contains);
     }
 
 }

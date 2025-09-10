@@ -1,16 +1,15 @@
-package org.kmin.board.api.user.infrastructure.repository;
+package org.kmin.board.domain.user.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_CLASS;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
-import org.kmin.board.api.common.config.TestJpaConfig;
+import org.kmin.board.domain.config.TestJpaAuditingConfig;
+import org.kmin.board.domain.fixture.UserAccountFixture;
 import org.kmin.board.domain.user.UserAccount;
-import org.kmin.board.api.common.fixture.UserAccountMockDataFixture;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.kmin.board.domain.user.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
@@ -20,7 +19,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 @DisplayName("Repository - 회원")
 @Sql(scripts = "/sql/data.sql", executionPhase = BEFORE_TEST_CLASS)
-@Import(TestJpaConfig.class)
+@Import({TestJpaAuditingConfig.class, org.kmin.board.domain.config.TestJpaConfig.class})
 @DirtiesContext(classMode = BEFORE_CLASS)
 @DataJpaTest
 class UserAccountRepositoryTest {
@@ -47,7 +46,7 @@ class UserAccountRepositoryTest {
     void givenUser_whenSave_thenUserIsSaved() {
         // Given
         String userId = "test-user1";
-        UserAccount userAccount = UserAccountMockDataFixture.createDBUserAccountFromUserId(userId);
+        UserAccount userAccount = UserAccountFixture.createDBUserAccountFromUserId(userId);
 
         // When
         UserAccount result = sut.save(userAccount);

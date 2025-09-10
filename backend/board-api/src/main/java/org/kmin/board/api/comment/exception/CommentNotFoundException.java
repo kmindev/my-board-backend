@@ -1,10 +1,9 @@
 package org.kmin.board.api.comment.exception;
 
-import org.kmin.board.api.common.exception.ApplicationException;
-import org.kmin.board.api.common.exception.ErrorCode;
+import org.kmin.global_utils.exception.ApplicationException;
 
 public class CommentNotFoundException extends ApplicationException {
     public CommentNotFoundException() {
-        super(ErrorCode.COMMENT_NOT_FOUND);
+        super(CommentErrorCode.COMMENT_NOT_FOUND);
     }
 }

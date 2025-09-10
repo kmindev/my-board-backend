@@ -8,9 +8,9 @@ import static org.mockito.Mockito.mock;
 
 import org.kmin.board.api.user.application.UserAccountService;
 import org.kmin.board.domain.user.UserRoleType;
-import org.kmin.board.api.common.exception.ApplicationException;
-import org.kmin.board.api.auth.domain.exception.AuthorizationRequestRejectedException;
-import org.kmin.board.api.auth.domain.exception.Oauth2ProviderNotProvideException;
+import org.kmin.global_utils.exception.ApplicationException;
+import org.kmin.board.api.auth.exception.AuthorizationRequestRejectedException;
+import org.kmin.board.api.auth.exception.Oauth2ProviderNotProvideException;
 import org.kmin.board.api.auth.domain.Oauth2ProviderType;
 import org.kmin.board.api.auth.infrastructure.oauth2.dto.Oauth2UserResponse;
 import org.kmin.board.api.auth.infrastructure.oauth2.google.GoogleOauth2Client;

@@ -1,12 +1,12 @@
 package org.kmin.board.api.common.presentation.dto.response;
 
-import org.kmin.board.api.common.exception.ErrorCode;
+import org.kmin.global_utils.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 public record ApiResponse<T>(
-        int code,
-        String message,
-        T data
+    int code,
+    String message,
+    T data
 ) {
 
     public static ApiResponse<Void> ok() {

@@ -1,26 +1,25 @@
 package org.kmin.board.api.article.application;
 
-import org.kmin.board.domain.article.Article;
-import org.kmin.board.domain.article.Hashtag;
-import org.kmin.board.api.user.application.UserAccountService;
-import org.kmin.board.domain.user.UserAccount;
+import java.util.Arrays;
+import java.util.Set;
+import lombok.RequiredArgsConstructor;
 import org.kmin.board.api.article.SearchType;
-import org.kmin.board.api.article.exception.ArticleNotFoundException;
-import org.kmin.board.api.article.exception.UnexpectedSearchTypeException;
-import org.kmin.board.api.user.exception.UserMismatchException;
-import org.kmin.board.domain.article.repository.ArticleRepository;
 import org.kmin.board.api.article.application.dto.ArticleUpdateDto;
 import org.kmin.board.api.article.application.dto.ArticleWithCommentsWithHashtagsDto;
 import org.kmin.board.api.article.application.dto.ArticleWithHashtagsDto;
 import org.kmin.board.api.article.application.dto.NewArticleRequestDto;
-import lombok.RequiredArgsConstructor;
+import org.kmin.board.api.article.exception.ArticleNotFoundException;
+import org.kmin.board.api.article.exception.ArticleUserMismatchException;
+import org.kmin.board.api.article.exception.UnexpectedSearchTypeException;
+import org.kmin.board.api.user.application.UserAccountService;
+import org.kmin.board.domain.article.Article;
+import org.kmin.board.domain.article.Hashtag;
+import org.kmin.board.domain.article.repository.ArticleRepository;
+import org.kmin.board.domain.user.UserAccount;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Arrays;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Transactional
@@ -60,16 +59,16 @@ public class ArticleService {
 
         return switch (searchType) {
             case TITLE ->
-                    articleRepository.findByTitleContaining(searchValue, pageable).map(ArticleWithHashtagsDto::from);
+                articleRepository.findByTitleContaining(searchValue, pageable).map(ArticleWithHashtagsDto::from);
             case CONTENT ->
-                    articleRepository.findByContentContaining(searchValue, pageable).map(ArticleWithHashtagsDto::from);
+                articleRepository.findByContentContaining(searchValue, pageable).map(ArticleWithHashtagsDto::from);
             case USER_ID -> articleRepository.findByUserAccount_UserIdContaining(searchValue, pageable).map(
-                    ArticleWithHashtagsDto::from);
+                ArticleWithHashtagsDto::from);
             case NICKNAME -> articleRepository.findByUserAccount_NicknameContaining(searchValue, pageable).map(
-                    ArticleWithHashtagsDto::from);
+                ArticleWithHashtagsDto::from);
             case HASHTAG -> articleRepository.findByHashtagNames(
-                            Arrays.stream(searchValue.split(" ")).toList(), pageable)
-                    .map(ArticleWithHashtagsDto::from);
+                    Arrays.stream(searchValue.split(" ")).toList(), pageable)
+                .map(ArticleWithHashtagsDto::from);
         };
     }
 
@@ -83,7 +82,7 @@ public class ArticleService {
         UserAccount userAccount = userAccountService.getUserAccount(dto.userId()); // 작성자
 
         if (!findArticle.getUserAccount().equals(userAccount)) { // 작성자 일치 여부 검증
-            throw new UserMismatchException();
+            throw new ArticleUserMismatchException();
         }
 
         findArticle.updateTitle(dto.title());
@@ -103,7 +102,7 @@ public class ArticleService {
         UserAccount userAccount = userAccountService.getUserAccount(userId);
 
         if (!findArticle.getUserAccount().equals(userAccount)) {
-            throw new UserMismatchException();
+            throw new ArticleUserMismatchException();
         }
 
         articleRepository.deleteById(articleId);

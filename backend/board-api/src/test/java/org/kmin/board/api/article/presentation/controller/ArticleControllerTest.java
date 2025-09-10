@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.kmin.board.api.article.exception.ArticleUserMismatchException;
 import org.kmin.board.api.common.config.JsonDataEncoder;
 import org.kmin.board.api.common.config.SecurityConfig;
 import org.kmin.board.api.common.exception.GlobalExceptionRestAdvice;
@@ -26,7 +27,6 @@ import org.kmin.board.api.article.presentation.dto.request.NewArticleRequest;
 import org.kmin.board.domain.user.UserRoleType;
 import org.kmin.board.api.article.SearchType;
 import org.kmin.board.api.article.exception.ArticleNotFoundException;
-import org.kmin.board.api.user.exception.UserMismatchException;
 import org.kmin.board.api.user.exception.UserNotFoundException;
 import org.kmin.board.api.auth.infrastructure.security.ApiAccessDeniedHandler;
 import org.kmin.board.api.auth.infrastructure.security.ApiAuthenticationFailureHandler;
@@ -278,7 +278,7 @@ class ArticleControllerTest {
         // Given
         Long articleId = 1L;
         ArticleUpdateRequest request = createArticleUpdateRequest();
-        UserMismatchException exception = new UserMismatchException();
+        ArticleUserMismatchException exception = new ArticleUserMismatchException();
         given(articleService.updateArticle(any(ArticleUpdateDto.class))).willThrow(exception);
 
         // When & Then
@@ -330,7 +330,7 @@ class ArticleControllerTest {
     void givenArticleIdAndInvalidUser_whenDeleteArticle_thenReturns4xx() throws Exception {
         // Given
         Long articleId = 1L;
-        UserMismatchException exception = new UserMismatchException();
+        ArticleUserMismatchException exception = new ArticleUserMismatchException();
         willThrow(exception).given(articleService).deleteArticle(any(), any());
 
         // When & Then

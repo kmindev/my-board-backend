@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.kmin.board.api.common.config.JsonDataEncoder;
-import org.kmin.board.api.auth.domain.exception.AuthorizationRequestRejectedException;
+import org.kmin.board.api.auth.exception.AuthorizationRequestRejectedException;
 import org.kmin.board.api.auth.domain.Oauth2ProviderType;
 import org.kmin.board.api.auth.application.Oauth2Service;
 import jakarta.servlet.http.HttpServletRequest;

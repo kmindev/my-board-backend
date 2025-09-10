@@ -1,7 +1,7 @@
 package org.kmin.board.api.auth.infrastructure.oauth2.kakao;
 
-import org.kmin.board.api.auth.domain.exception.Oauth2TokenRequestException;
-import org.kmin.board.api.auth.domain.exception.Oauth2UserRequestException;
+import org.kmin.board.api.auth.exception.Oauth2TokenRequestException;
+import org.kmin.board.api.auth.exception.Oauth2UserRequestException;
 import org.kmin.board.api.auth.infrastructure.oauth2.Oauth2Client;
 import org.kmin.board.api.auth.infrastructure.oauth2.dto.Oauth2UserResponse;
 import org.kmin.board.api.auth.infrastructure.oauth2.response.Oauth2TokenResponse;

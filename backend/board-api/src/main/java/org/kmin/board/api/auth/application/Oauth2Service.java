@@ -1,7 +1,7 @@
 package org.kmin.board.api.auth.application;
 
-import org.kmin.board.api.auth.domain.exception.AuthorizationRequestRejectedException;
-import org.kmin.board.api.auth.domain.exception.Oauth2ProviderNotProvideException;
+import org.kmin.board.api.auth.exception.AuthorizationRequestRejectedException;
+import org.kmin.board.api.auth.exception.Oauth2ProviderNotProvideException;
 import org.kmin.board.api.auth.infrastructure.oauth2.Oauth2Client;
 import org.kmin.board.api.auth.domain.Oauth2ProviderType;
 import org.kmin.board.api.auth.infrastructure.oauth2.dto.Oauth2UserResponse;

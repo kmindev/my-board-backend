@@ -1,5 +1,6 @@
 package org.kmin.board.api.article.application;
 
+import org.kmin.board.api.article.exception.ArticleUserMismatchException;
 import org.kmin.board.domain.article.Article;
 import org.kmin.board.domain.article.Hashtag;
 import org.kmin.board.api.user.application.UserAccountService;
@@ -7,7 +8,6 @@ import org.kmin.board.domain.user.UserAccount;
 import org.kmin.board.api.article.SearchType;
 import org.kmin.board.api.article.exception.ArticleNotFoundException;
 import org.kmin.board.api.article.exception.UnexpectedSearchTypeException;
-import org.kmin.board.api.user.exception.UserMismatchException;
 import org.kmin.board.domain.article.repository.ArticleRepository;
 import org.kmin.board.api.article.application.dto.ArticleUpdateDto;
 import org.kmin.board.api.article.application.dto.ArticleWithCommentsWithHashtagsDto;
@@ -224,12 +224,12 @@ class ArticleServiceTest {
         given(userAccountService.getUserAccount(userId)).willReturn(otherUserAccount);
 
         // When
-        UserMismatchException result = assertThrows(UserMismatchException.class,
+        ArticleUserMismatchException result = assertThrows(ArticleUserMismatchException.class,
                 () -> sut.updateArticle(articleUpdateDto)
         );
 
         // Then
-        assertThat(result).isInstanceOf(UserMismatchException.class);
+        assertThat(result).isInstanceOf(ArticleUserMismatchException.class);
         then(articleRepository).should().findById(articleId);
         then(userAccountService).should().getUserAccount(userId);
     }
@@ -271,12 +271,12 @@ class ArticleServiceTest {
         given(userAccountService.getUserAccount(userId)).willReturn(otherUserAccount);
 
         // When
-        UserMismatchException result = assertThrows(UserMismatchException.class,
+        ArticleUserMismatchException result = assertThrows(ArticleUserMismatchException.class,
                 () -> sut.deleteArticle(articleId, userId)
         );
 
         // Then
-        assertThat(result).isInstanceOf(UserMismatchException.class);
+        assertThat(result).isInstanceOf(ArticleUserMismatchException.class);
         then(articleRepository).should().findById(articleId);
         then(userAccountService).should().getUserAccount(userId);
     }

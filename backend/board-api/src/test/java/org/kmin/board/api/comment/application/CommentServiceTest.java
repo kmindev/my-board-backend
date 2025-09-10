@@ -1,34 +1,35 @@
 package org.kmin.board.api.comment.application;
 
-import org.kmin.board.api.article.application.ArticleService;
-import org.kmin.board.api.common.fixture.CommentFixture;
-import org.kmin.board.domain.article.Article;
-import org.kmin.board.domain.comment.Comment;
-import org.kmin.board.api.user.application.UserAccountService;
-import org.kmin.board.domain.user.UserAccount;
-import org.kmin.board.api.article.exception.ArticleNotFoundException;
-import org.kmin.board.api.user.exception.UserMismatchException;
-import org.kmin.board.domain.comment.repository.CommentRepository;
-import org.kmin.board.api.article.application.dto.ArticleWithCommentsWithHashtagsDto;
-import org.kmin.board.api.comment.application.dto.NewCommentRequestDto;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.kmin.board.api.common.fixture.ArticleFixture.createDBArticle;
+import static org.kmin.board.api.common.fixture.CommentFixture.createDBCommentFromCommentIdAndUserAccount;
+import static org.kmin.board.api.common.fixture.NewCommentRequestDtoFixture.createNewCommentRequestDto;
+import static org.kmin.board.api.common.fixture.UserAccountFixture.createDBUserAccountFromUserId;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
+
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.kmin.board.api.article.application.ArticleService;
+import org.kmin.board.api.article.application.dto.ArticleWithCommentsWithHashtagsDto;
+import org.kmin.board.api.article.exception.ArticleNotFoundException;
+import org.kmin.board.api.comment.application.dto.NewCommentRequestDto;
+import org.kmin.board.api.comment.exception.CommentUserMismatchException;
+import org.kmin.board.api.common.fixture.CommentFixture;
+import org.kmin.board.api.user.application.UserAccountService;
+import org.kmin.board.domain.article.Article;
+import org.kmin.board.domain.comment.Comment;
+import org.kmin.board.domain.comment.repository.CommentRepository;
+import org.kmin.board.domain.user.UserAccount;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
-
-import static org.kmin.board.api.common.fixture.ArticleFixture.createDBArticle;
-import static org.kmin.board.api.common.fixture.CommentMockDataFixture.createDBCommentFromCommentIdAndUserAccount;
-import static org.kmin.board.api.common.fixture.UserAccountMockDataFixture.createDBUserAccountFromUserId;
-import static org.kmin.board.api.common.fixture.NewCommentRequestDtoFixture.createNewCommentRequestDto;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.*;
 
 @DisplayName("비즈니스 로직 - 댓글")
 @ExtendWith(MockitoExtension.class)
@@ -51,7 +52,7 @@ public class CommentServiceTest {
         NewCommentRequestDto newCommentRequestDto = createNewCommentRequestDto();
         UserAccount userAccount = createDBUserAccountFromUserId(newCommentRequestDto.userId());
         Article findArticle = createDBArticle();
-        Comment comment = CommentMockDataFixture.createDBCommentFromArticleAndUserAccount(findArticle, userAccount);
+        Comment comment = CommentFixture.createDBCommentFromArticleAndUserAccount(findArticle, userAccount);
 
         given(articleService.findArticle(anyLong())).willReturn(findArticle);
         given(userAccountService.getUserAccount(newCommentRequestDto.userId())).willReturn(userAccount);
@@ -76,7 +77,7 @@ public class CommentServiceTest {
 
         // When
         ArticleNotFoundException result = assertThrows(ArticleNotFoundException.class,
-                () -> sut.newComment(newCommentRequestDto)
+            () -> sut.newComment(newCommentRequestDto)
         );
 
         // Then
@@ -121,12 +122,12 @@ public class CommentServiceTest {
         given(userAccountService.getUserAccount(userId)).willReturn(otherUserAccount);
 
         // When
-        UserMismatchException result = assertThrows(UserMismatchException.class,
-                () -> sut.deleteComment(commentId, userId)
+        CommentUserMismatchException result = assertThrows(CommentUserMismatchException.class,
+            () -> sut.deleteComment(commentId, userId)
         );
 
         // Then
-        assertThat(result).isInstanceOf(UserMismatchException.class);
+        assertThat(result).isInstanceOf(CommentUserMismatchException.class);
         then(commentRepository).should().findById(commentId);
         then(userAccountService).should().getUserAccount(userId);
     }

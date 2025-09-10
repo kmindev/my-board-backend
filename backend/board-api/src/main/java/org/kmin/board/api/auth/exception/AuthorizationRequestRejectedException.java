@@ -1,14 +1,13 @@
-package org.kmin.board.api.auth.domain.exception;
+package org.kmin.board.api.auth.exception;
 
-import org.kmin.board.api.common.exception.ApplicationException;
-import org.kmin.board.api.common.exception.ErrorCode;
+import org.kmin.global_utils.exception.ApplicationException;
 
 public class AuthorizationRequestRejectedException extends ApplicationException {
 
     private String error;
 
     public AuthorizationRequestRejectedException(String error) {
-        super(ErrorCode.AUTHORIZATION_REQUEST_REJECTED);
+        super(AuthErrorCode.AUTHORIZATION_REQUEST_REJECTED);
         this.error = error;
     }
 

@@ -1,10 +1,9 @@
 package org.kmin.board.api.user.exception;
 
-import org.kmin.board.api.common.exception.ApplicationException;
-import org.kmin.board.api.common.exception.ErrorCode;
+import org.kmin.global_utils.exception.ApplicationException;
 
 public class UserNotFoundException extends ApplicationException {
     public UserNotFoundException() {
-        super(ErrorCode.USER_NOT_FOUND);
+        super(UserErrorCode.USER_NOT_FOUND);
     }
 }

@@ -1,16 +1,16 @@
 package org.kmin.board.api.comment.application;
 
+import lombok.RequiredArgsConstructor;
 import org.kmin.board.api.article.application.ArticleService;
-import org.kmin.board.domain.article.Article;
-import org.kmin.board.domain.comment.Comment;
-import org.kmin.board.api.user.application.UserAccountService;
-import org.kmin.board.domain.user.UserAccount;
-import org.kmin.board.api.comment.exception.CommentNotFoundException;
-import org.kmin.board.api.user.exception.UserMismatchException;
-import org.kmin.board.domain.comment.repository.CommentRepository;
 import org.kmin.board.api.article.application.dto.ArticleWithCommentsWithHashtagsDto;
 import org.kmin.board.api.comment.application.dto.NewCommentRequestDto;
-import lombok.RequiredArgsConstructor;
+import org.kmin.board.api.comment.exception.CommentNotFoundException;
+import org.kmin.board.api.comment.exception.CommentUserMismatchException;
+import org.kmin.board.api.user.application.UserAccountService;
+import org.kmin.board.domain.article.Article;
+import org.kmin.board.domain.comment.Comment;
+import org.kmin.board.domain.comment.repository.CommentRepository;
+import org.kmin.board.domain.user.UserAccount;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +36,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
         UserAccount userAccount = userAccountService.getUserAccount(userId);
         if (!comment.getUserAccount().equals(userAccount)) {
-            throw new UserMismatchException();
+            throw new CommentUserMismatchException();
         }
 
         commentRepository.deleteById(commentId);

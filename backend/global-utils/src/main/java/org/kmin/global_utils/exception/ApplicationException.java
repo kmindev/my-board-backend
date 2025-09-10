@@ -1,4 +1,4 @@
-package org.kmin.board.api.common.exception;
+package org.kmin.global_utils.exception;
 
 import lombok.Getter;
 

@@ -36,25 +36,9 @@ subprojects {
         implementation 'org.apache.commons:commons-collections4:4.4'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-        // TODO: 공통 의존성은 여기에 두고, 특정 모듈에만 사용하는 경우 각 모듈로 이동시킨다.
-        implementation 'org.springframework.boot:spring-boot-starter-security'
-        implementation 'org.springframework.boot:spring-boot-starter-validation'
-        implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        runtimeOnly 'com.h2database:h2'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'org.springframework.security:spring-security-test'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-        // JPA + QueryDSL
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-        annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
-        annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-        annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
-        // swagger
-        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
+        runtimeOnly 'com.h2database:h2'
     }
 
     test {

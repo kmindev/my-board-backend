@@ -1,0 +1,6 @@
+rootProject.name = 'my-board-backend'
+
+include 'global-utils'
+include 'board-core:domain'
+include 'board-core:infra'
+include 'board-api'

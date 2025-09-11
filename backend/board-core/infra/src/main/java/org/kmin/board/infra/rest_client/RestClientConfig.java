@@ -1,23 +1,22 @@
-package org.kmin.board.api.common.config;
+package org.kmin.board.infra.rest_client;
 
-import org.kmin.board.api.common.config.interceptor.RestClientLoggingInterceptor;
 import java.net.http.HttpClient;
 import java.time.Duration;
+import org.kmin.board.infra.MyBoardConfig;
+import org.kmin.board.infra.rest_client.interceptor.RestClientLoggingInterceptor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 
-@Configuration
-public class RestClientConfig {
+public class RestClientConfig implements MyBoardConfig {
 
     @Bean
     public RestClient defaultRestClient() {
         return RestClient.builder()
-                .requestFactory(jdkClientHttpRequestFactory())
-                .requestInterceptor(new RestClientLoggingInterceptor())
-                .build();
+            .requestFactory(jdkClientHttpRequestFactory())
+            .requestInterceptor(new RestClientLoggingInterceptor())
+            .build();
     }
 
     @Bean

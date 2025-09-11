@@ -5,8 +5,9 @@ import org.kmin.board.infra.MyBoardConfigGroup;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration(proxyBeanMethods = false)
-@EnableMyBoardConfig(
-    MyBoardConfigGroup.JPA
-)
+@EnableMyBoardConfig({
+    MyBoardConfigGroup.JPA,
+    MyBoardConfigGroup.REST_CLIENT
+})
 class InfraConfig {
 }

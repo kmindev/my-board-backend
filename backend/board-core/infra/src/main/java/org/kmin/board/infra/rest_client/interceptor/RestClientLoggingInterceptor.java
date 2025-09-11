@@ -1,4 +1,4 @@
-package org.kmin.board.api.common.config.interceptor;
+package org.kmin.board.infra.rest_client.interceptor;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

@@ -1,4 +1,4 @@
-package org.kmin.board.infra.config;
+package org.kmin.board.infra.jpa;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

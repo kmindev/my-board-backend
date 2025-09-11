@@ -19,7 +19,8 @@ class MyBoardConfigImportSelectorTest {
     void entryEqualsSameInstance() {
         // Given
         MyBoardConfigGroup[] group = new MyBoardConfigGroup[]{
-            MyBoardConfigGroup.JPA
+            MyBoardConfigGroup.JPA,
+            MyBoardConfigGroup.REST_CLIENT
         };
         AnnotationMetadata metadata = mock(AnnotationMetadata.class);
         EnableMyBoardConfig annotation = enableMyBoardConfig(group);
